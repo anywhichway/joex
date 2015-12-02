@@ -1,6 +1,6 @@
 {
   "name": "joex",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Javascript Object Extensions",
   "main": "index.js",
   "isomorphic":true,
@@ -42,6 +42,6 @@
   },
   "homepage": "https://github.com/anywhichway/joex#readme",
   "dependencies": {
-    "abiut-time": ""
+    "about-time": ""
   }
 }
