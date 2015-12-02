@@ -1,0 +1,47 @@
+{
+  "name": "joex",
+  "version": "0.0.4",
+  "description": "Javascript Object Extensions",
+  "main": "index.js",
+  "isomorphic":true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anywhichway/joex.git"
+  },
+  "keywords": [
+    "intersection",
+    "disjoint",
+    "lt",
+    "lte",
+    "eq",
+    "neq",
+    "gte",
+    "gt",
+    "Array.min",
+    "Array.max",
+    "Array.avg",
+    "Array.sum",
+    "String.between",
+    "String.outside",
+    "Date.before",
+    "Date.after",
+    "Set.some",
+    "Set.every",
+    "Set.min",
+    "Set.max",
+    "Set.avg",
+    "Set.sum"
+  ],
+  "author": "Simon Y. Blackwell <syblackwell@anywhichway.com> (http://www.github.com/anywhichway)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anywhichway/joex/issues"
+  },
+  "homepage": "https://github.com/anywhichway/joex#readme",
+  "dependencies": {
+    "abiut-time": ""
+  }
+}
