@@ -1,6 +1,5 @@
 (function() {
 	"use strict";
-	var _global = this;
 	var Time = require('about-time').Time;
 	var TimeSpan = require('about-time').TimeSpan;
 	/*
@@ -203,7 +202,6 @@
 		return array.length===this.size && intersection(toArray(this),array).length===this.size;
 	}
 	Set.prototype.crossproduct = function(iterable,test) {
-		var array = (iterable instanceof Array ? iterable : toArray(iterable));
 		return crossproduct(toArray(this),test);
 	}
 	Set.prototype.eq = function(set) {
@@ -271,7 +269,7 @@
 	
 		r = f +
 		    a
-		    .map(function (v, i, a) { return codes[v] })
+		    .map(function (v) { return codes[v] })
 		    .filter(function (v, i, a) {
 		        return ((i === 0) ? v !== codes[f] : v !== a[i - 1]);
 		    })
