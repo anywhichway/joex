@@ -1,6 +1,6 @@
 {
   "name": "joex",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Javascript Object Extensions",
   "main": "index.js",
   "isomorphic":true,
@@ -14,6 +14,9 @@
   "keywords": [
     "intersection",
     "disjoint",
+    "coincident",
+    "crossproduct",
+    "soundex",
     "lt",
     "lte",
     "eq",

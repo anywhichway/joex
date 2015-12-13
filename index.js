@@ -2,7 +2,6 @@
 	"use strict";
 	var _global = this;
 	var Time = require('about-time').Time;
-	var Duration = require('about-time').Duration;
 	var TimeSpan = require('about-time').TimeSpan;
 	/*
 	 * https://github.com/Benvie
@@ -349,17 +348,6 @@
 	Number.prototype.outside = function(a,b) {
 		return !this.between(a,b);
 	}
-	
-	
-	Object.defineProperty(Date.prototype,"time",{enumerable:true,configurable:false,set:function(time) { this.setTime(time); },get:function() { return this.getTime(); }});
-	Object.defineProperty(Date.prototype,"year",{enumerable:true,configurable:false,set:function() { return;},get:function() { return this.getFullYear(); }});
-	Object.defineProperty(Date.prototype,"month",{enumerable:true,configurable:false,set:function() { return;},get:function() { return this.getMonth()+1; }});
-	Object.defineProperty(Date.prototype,"dayOfMonth",{enumerable:true,configurable:false,set:function() { return;},get:function() { return this.getDate(); }});
-	Object.defineProperty(Date.prototype,"hours",{enumerable:true,configurable:false,set:function() { return;},get:function() { return this.getHours(); }});
-	Object.defineProperty(Date.prototype,"minutes",{enumerable:true,configurable:false,set:function() { return;},get:function() { return this.getMinutes(); }});
-	Object.defineProperty(Date.prototype,"seconds",{enumerable:true,configurable:false,set:function() { return;},get:function() { return this.getSeconds(); }});
-	Object.defineProperty(Date.prototype,"milliseconds",{enumerable:true,configurable:false,set:function() { return;},get:function() { return this.getMilliseconds(); }});
-	Object.defineProperty(Date.prototype,"dayOfWeek",{enumerable:true,configurable:false,set:function() { return;},get:function() { return this.getDay()+1; }});
 	
 	Date.prototype.lt = function(value,precision) {
 		if(value instanceof TimeSpan) {
