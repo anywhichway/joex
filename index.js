@@ -346,75 +346,52 @@
 	Number.prototype.outside = function(a,b) {
 		return !this.between(a,b);
 	}
-	
-	Date.prototype.lt = function(value,precision) {
-		if(value instanceof TimeSpan) {
-			return value.after(this,precision);
-		}
-		return new Time(this,precision) < new Time(value,precision);
+	Date.prototype.lt = function(value) {
+		return this.getTime() < (new Date(value)).getTime();
 	}
-	Date.prototype.lte = function(value,precision) {
-		if(value instanceof TimeSpan) {
-			return value.adjacentOrAfter(this,precision);
-		}
-		return new Time(this,precision) <= new Time(value,precision);
+	Date.prototype.lte = function(value) {
+		return this.getTime() <= (new Date(value)).getTime();
 	}
-	Date.prototype.eq = function(value,precision) {
-		if(value===this) {
-			return true;
-		}
-		if(value instanceof Date && this.time===value.time) {
-			return true;
-		}
-		if(value instanceof TimeSpan) {
-			return value.coincident(this,precision);
-		}
-		return new Time(this,precision).valueOf() == new Time(value,precision).valueOf();
+	Date.prototype.eq = function(value) {
+		return this.getTime() == (new Date(value)).getTime();
 	}
 	Date.prototype.eeq = function(value) {
 		return this===value;
 	}
 	Date.prototype.neq = function(value,precision) {
-		return new Time(this,precision).valueOf() !== new Time(value,precision).valueOf();
+		return this.getTime() !== (new Date(value)).getTime();
 	}
 	Date.prototype.neeq = function(value) {
 		return this!==value;
 	}
-	Date.prototype.gte = function(value,precision) {
-		if(value instanceof TimeSpan) {
-			return value.adjacentOrBefore(this,precision);
-		}
-		return new Time(this,precision).valueOf() >= new Time(value,precision).valueOf();
+	Date.prototype.gte = function(value) {
+		return this.getTime() >= (new Date(value)).getTime();
 	}
-	Date.prototype.gt = function(value,precision) {
-		if(value instanceof TimeSpan) {
-			return value.adjacentOrBefore(this,precision);
-		}
-		return new Time(this,precision).valueOf() >= new Time(value,precision).valueOf();
+	Date.prototype.gt = function(value) {
+		return this.getTime() > (new Date(value)).getTime();
 	}
-	Date.prototype.before = Date.prototype.lt;
-	Date.prototype.adjacentOrBefore = Date.prototype.lte;
-	Date.prototype.after = Date.prototype.gt;
-	Date.prototype.adjacentOrAfter = Date.prototype.gte;
-	Date.prototype.coincident = function(value,precision) {
-		if(value instanceof TimeSpan) {
-			var d = new TimeSpan(this,this);
-			return d.coincident(value,precision);
-		}
-		return this.eq(value,precision);
+	// http://www.pilcrow.nl/2012/09/javascript-date-isleapyear-and-getlastdayofmonth
+	//Date functions. (Caveat: months start at 0!)
+	Date.isLeapYear = function (iYear)
+	{
+		return new Date(iYear, 1, 29).getDate() === 29;
+	};
+	Date.prototype.isLeapYear = function ()
+	{
+		return Date.isLeapYear(this.getFullYear());
 	}
-	Date.prototype.disjoint = function(value,precision) {
-		if(value instanceof TimeSpan) {
-			var d = new TimeSpan(this,this);
-			return d.disjoint(value,precision);
+	Date.getLastDayOfMonth = function (iMonth, iYear)
+	{
+		if (/^([024679]|11)$/.test(iMonth)) {
+			return 31;
 		}
-		return this.neq(value,precision);
+		if (/^[358]$/.test(iMonth)) {
+			return 30;
+		}
+		return Date.isLeapYear(iYear) ? 29 : 28;
 	}
-	Date.prototype.intersects = function(value,precision) {
-		if(value instanceof TimeSpan) {
-			var d = new TimeSpan(this,this);
-			return d.intersects(value,precision);
-		}
-		return this.eq(value,precision);
+	Date.prototype.getLastDayOfMonth = function ()
+	{
+		return Date.getLastDayOfMonth(this.getMonth(), this.getFullYear());
 	}
 }).call(this);

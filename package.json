@@ -1,11 +1,11 @@
 {
   "name": "joex",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "Javascript Object Extensions",
   "main": "index.js",
   "isomorphic":true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "istanbul cover node_modules/mocha/bin/_mocha"
   },
   "repository": {
     "type": "git",
@@ -46,5 +46,10 @@
   "homepage": "https://github.com/anywhichway/joex#readme",
   "dependencies": {
     "about-time": ""
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "istanbul": "^0.4.1",
+    "mocha": "^2.3.4"
   }
 }
