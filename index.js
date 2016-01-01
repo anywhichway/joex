@@ -1,7 +1,5 @@
 (function() {
 	"use strict";
-	var Time = require('about-time').Time;
-	var TimeSpan = require('about-time').TimeSpan;
 	/*
 	 * https://github.com/Benvie
 	 * improvements 2015 by AnyWhichWay

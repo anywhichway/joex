@@ -44,9 +44,6 @@
     "url": "https://github.com/anywhichway/joex/issues"
   },
   "homepage": "https://github.com/anywhichway/joex#readme",
-  "dependencies": {
-    "about-time": ""
-  },
   "devDependencies": {
     "chai": "^3.4.1",
     "istanbul": "^0.4.1",
