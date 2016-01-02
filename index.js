@@ -84,31 +84,32 @@
 	  }
 	  return result
 	}
-	Array.prototype.intersects = function(array) {
+	var ExtendedArray = Array;
+	ExtendedArray.prototype.intersects = function(array) {
 		return intersection(this,array).length>0;
 	}
-	Array.prototype.disjoint = function(array) {
+	ExtendedArray.prototype.disjoint = function(array) {
 		return intersection(this,array).length===0;
 	}
-	Array.prototype.coincident = function(array) {
+	ExtendedArray.prototype.coincident = function(array) {
 		return intersection(this,array).length===this.length;
 	}
-	Array.prototype.crossproduct = function(test) {
+	ExtendedArray.prototype.crossproduct = function(test) {
 		return crossproduct(this,test);
 	}
-	if(!Array.prototype.includes) {
-		Array.prototype.includes = function(item) { return this.indexOf(item)>=0; }
+	if(!ExtendedArray.prototype.includes) {
+		ExtendedArray.prototype.includes = function(item) { return this.indexOf(item)>=0; }
 	}
-	Array.prototype.excludes = function(item) {
+	ExtendedArray.prototype.excludes = function(item) {
 		return !this.includes(item);
 	}
-	Array.prototype.eq = function(array) {
-		return array instanceof Array && this.length===array.length && this.every(function(item,i) { return item==array[i];});
+	ExtendedArray.prototype.eq = function(array) {
+		return array instanceof ExtendedArray && this.length===array.length && this.every(function(item,i) { return item==array[i];});
 	}
-	Array.prototype.neq = function(array) {
-		return !(array instanceof Array) || this.length!==array.length && this.some(function(item,i) { return item!=array[i];});
+	ExtendedArray.prototype.neq = function(array) {
+		return !(array instanceof ExtendedArray) || this.length!==array.length && this.some(function(item,i) { return item!=array[i];});
 	}
-	Array.prototype.min = function() {
+	ExtendedArray.prototype.min = function() {
 		var min;
 		this.forEach(function(item) {
 			if(min===undefined) {
@@ -119,7 +120,7 @@
 		});
 		return min;
 	}
-	Array.prototype.max = function() {
+	ExtendedArray.prototype.max = function() {
 		var max;
 		this.forEach(function(item) {
 			if(max===undefined) {
@@ -130,7 +131,7 @@
 		});
 		return max;
 	}
-	Array.prototype.sum = function() {
+	ExtendedArray.prototype.sum = function() {
 		var sum;
 		this.forEach(function(item) {
 			if(typeof(item)==="number") {
@@ -143,7 +144,7 @@
 		});
 		return (sum===undefined ? NaN : sum);
 	}
-	Array.prototype.avg = function() {
+	ExtendedArray.prototype.avg = function() {
 		var sum, count = 0;
 		this.forEach(function(item) {
 			if(typeof(item)==="number") {
@@ -157,7 +158,8 @@
 		});
 		return (sum===undefined ? NaN : sum / count);
 	}
-	Object.defineProperty(Array.prototype,"count",{enumerable:true,get:function() { return this.length; },set:function() {}});
+	Object.defineProperty(ExtendedArray.prototype,"count",{enumerable:true,get:function() { return this.length; },set:function() {}});
+	Array = ExtendedArray;
 	
 	function toArray(object) {
 		var array = [], values = object.values(), data = values.next();
@@ -167,7 +169,8 @@
 		} 
 		return array;
 	}
-	Set.prototype.every = function(f,thisarg) {
+	var ExtendedSet = Set;
+	ExtendedSet.prototype.every = function(f,thisarg) {
 		var me = (thisarg ? thisarg : this), i = 0;
 		for(var item of me) {
 			if(!f(item,i)) {
@@ -177,7 +180,7 @@
 		}
 		return true;
 	}
-	Set.prototype.some = function(f,thisarg) {
+	ExtendedSet.prototype.some = function(f,thisarg) {
 		var me = (thisarg ? thisarg : this), i = 0;
 		for(var item of me) {
 			if(f(item,i)) {
@@ -187,68 +190,71 @@
 		}
 		return false;
 	}
-	Set.prototype.intersects = function(iterable) {
+	ExtendedSet.prototype.intersects = function(iterable) {
 		var array = (iterable instanceof Array ? iterable : toArray(iterable));
 		return intersection(toArray(this),array).length>0;
 	}
-	Set.prototype.disjoint = function(iterable) {
+	ExtendedSet.prototype.disjoint = function(iterable) {
 		var array = (iterable instanceof Array ? iterable : toArray(iterable));
 		return intersection(toArray(this),array).length===0;
 	}
-	Set.prototype.coincident = function(iterable) {
+	ExtendedSet.prototype.coincident = function(iterable) {
 		var array = (iterable instanceof Array ? iterable : toArray(iterable));
 		return array.length===this.size && intersection(toArray(this),array).length===this.size;
 	}
-	Set.prototype.crossproduct = function(iterable,test) {
+	ExtendedSet.prototype.crossproduct = function(iterable,test) {
 		return crossproduct(toArray(this),test);
 	}
-	Set.prototype.eq = function(set) {
-		return set instanceof Set && this.size===set.size && this.coincident(set);
+	ExtendedSet.prototype.eq = function(set) {
+		return set instanceof ExtendedSet && this.size===set.size && this.coincident(set);
 	}
-	Set.prototype.neq = function(set) {
-		return !(set instanceof Set) || this.size!==set.size || !this.coincident(set);
+	ExtendedSet.prototype.neq = function(set) {
+		return !(set instanceof ExtendedSet) || this.size!==set.size || !this.coincident(set);
 	}
-	Set.prototype.min = function() {
+	ExtendedSet.prototype.min = function() {
 		return toArray(this).min();
 	}
-	Set.prototype.max = function() {
+	ExtendedSet.prototype.max = function() {
 		return toArray(this).max();
 	}
-	Set.prototype.sum = function() {
+	ExtendedSet.prototype.sum = function() {
 		return toArray(this).sum();
 	}
-	Set.prototype.avg= function() {
+	ExtendedSet.prototype.avg= function() {
 		return toArray(this).avg();
 	}
-	Set.prototype.toJSON = function() {
+	ExtendedSet.prototype.toJSON = function() {
 		return toArray(this);
 	}
-	Object.defineProperty(Set.prototype,"count",{enumerable:true,get:function() { return this.size; },set:function() { }});
+	Object.defineProperty(ExtendedSet.prototype,"count",{enumerable:true,get:function() { return this.size; },set:function() { }});
+	Set = ExtendedSet;
 	
-	Boolean.prototype.lt = function(value) {
+	var ExtendedBoolean = Boolean;
+	ExtendedBoolean.prototype.lt = function(value) {
 		return this.valueOf() < value;
 	}
-	Boolean.prototype.lte = function(value) {
+	ExtendedBoolean.prototype.lte = function(value) {
 		return this.valueOf() <= value;
 	}
-	Boolean.prototype.eq = function(value) {
+	ExtendedBoolean.prototype.eq = function(value) {
 		return this.valueOf() == value;
 	}
-	Boolean.prototype.eeq = function(value) {
+	ExtendedBoolean.prototype.eeq = function(value) {
 		return this.valueOf() == value;
 	}
-	Boolean.prototype.neq = function(value) {
+	ExtendedBoolean.prototype.neq = function(value) {
 		return this.valueOf() != value;
 	}
-	Boolean.prototype.neeq = function(value) {
+	ExtendedBoolean.prototype.neeq = function(value) {
 		return this.valueOf() !== value;
 	}
-	Boolean.prototype.gte = function(value) {
+	ExtendedBoolean.prototype.gte = function(value) {
 		return this.valueOf() >= value;
 	}
-	Boolean.prototype.gt = function(value) {
+	ExtendedBoolean.prototype.gt = function(value) {
 		return this.valueOf() > value;
 	}
+	Boolean = ExtendedBoolean;
 	
 	// soundex from https://gist.github.com/shawndumas/1262659
 	function soundex(s) {
@@ -275,110 +281,116 @@
 		
 		return (r + '000').slice(0, 4).toUpperCase();
 	}
-	String.prototype.soundex = function() {
+	var ExtendedString = String;
+	ExtendedString.prototype.soundex = function() {
 		return soundex(this.valueOf());
 	}
-	String.prototype.echoes = function(string) {
+	ExtendedString.prototype.echoes = function(string) {
 		return soundex(this.valueOf())===soundex(string);
 	}
-	String.prototype.lt = function(value) {
+	ExtendedString.prototype.lt = function(value) {
 		return this.valueOf() < value;
 	}
-	String.prototype.lte = function(value) {
+	ExtendedString.prototype.lte = function(value) {
 		return this.valueOf() <= value;
 	}
-	String.prototype.eq = function(value) {
+	ExtendedString.prototype.eq = function(value) {
 		return this.valueOf() == value;
 	}
-	String.prototype.eeq = function(value) {
+	ExtendedString.prototype.eeq = function(value) {
 		return this.valueOf() === value;
 	}
-	String.prototype.neq = function(value) {
+	ExtendedString.prototype.neq = function(value) {
 		return this.valueOf() != value;
 	}
-	String.prototype.neeq = function(value) {
+	ExtendedString.prototype.neeq = function(value) {
 		return this.valueOf() !== value;
 	}
-	String.prototype.gte = function(value) {
+	ExtendedString.prototype.gte = function(value) {
 		return this.valueOf() >= value;
 	}
-	String.prototype.gt = function(value) {
+	ExtendedString.prototype.gt = function(value) {
 		return this.valueOf() > value;
 	}
-	String.prototype.between = function(a,b) {
+	ExtendedString.prototype.between = function(a,b) {
 		var value = this.valueOf();
 		return (value >= a && value <= b) || (value >= b && value <= a);
 	}
-	String.prototype.outside = function(a,b) {
+	ExtendedString.prototype.outside = function(a,b) {
 		return !this.between(a,b);
 	}
+	String = ExtendedString;
 	
-	Number.prototype.lt = function(value) {
+	var ExtendedNumber = Number;
+	ExtendedNumber.prototype.lt = function(value) {
 		return this.valueOf() < value;
 	}
-	Number.prototype.lte = function(value) {
+	ExtendedNumber.prototype.lte = function(value) {
 		return this.valueOf() <= value;
 	}
-	Number.prototype.eq = function(value) {
+	ExtendedNumber.prototype.eq = function(value) {
 		return this.valueOf() == value;
 	}
-	Number.prototype.eeq = function(value) {
+	ExtendedNumber.prototype.eeq = function(value) {
 		return this.valueOf() === value;
 	}
-	Number.prototype.neq = function(value) {
+	ExtendedNumber.prototype.neq = function(value) {
 		return this.valueOf() != value;
 	}
-	Number.prototype.neeq = function(value) {
+	ExtendedNumber.prototype.neeq = function(value) {
 		return this.valueOf() !== value;
 	}
-	Number.prototype.gte = function(value) {
+	ExtendedNumber.prototype.gte = function(value) {
 		return this.valueOf() >= value;
 	}
-	Number.prototype.gt = function(value) {
+	ExtendedNumber.prototype.gt = function(value) {
 		return this.valueOf() > value;
 	}
-	Number.prototype.between = function(a,b) {
+	ExtendedNumber.prototype.between = function(a,b) {
 		var value = this.valueOf();
 		return (value >= a && value <= b) || (value >= b && value <= a);
 	}
-	Number.prototype.outside = function(a,b) {
+	ExtendedNumber.prototype.outside = function(a,b) {
 		return !this.between(a,b);
 	}
-	Date.prototype.lt = function(value) {
-		return this.getTime() < (new Date(value)).getTime();
+	Number = ExtendedNumber;
+	
+	var ExtendedDate = Date;
+	ExtendedDate.prototype.lt = function(value) {
+		return this.getTime() < (new ExtendedDate(value)).getTime();
 	}
-	Date.prototype.lte = function(value) {
-		return this.getTime() <= (new Date(value)).getTime();
+	ExtendedDate.prototype.lte = function(value) {
+		return this.getTime() <= (new ExtendedDate(value)).getTime();
 	}
-	Date.prototype.eq = function(value) {
-		return this.getTime() == (new Date(value)).getTime();
+	ExtendedDate.prototype.eq = function(value) {
+		return this.getTime() == (new ExtendedDate(value)).getTime();
 	}
-	Date.prototype.eeq = function(value) {
+	ExtendedDate.prototype.eeq = function(value) {
 		return this===value;
 	}
-	Date.prototype.neq = function(value,precision) {
-		return this.getTime() !== (new Date(value)).getTime();
+	ExtendedDate.prototype.neq = function(value,precision) {
+		return this.getTime() !== (new ExtendedDate(value)).getTime();
 	}
-	Date.prototype.neeq = function(value) {
+	ExtendedDate.prototype.neeq = function(value) {
 		return this!==value;
 	}
-	Date.prototype.gte = function(value) {
-		return this.getTime() >= (new Date(value)).getTime();
+	ExtendedDate.prototype.gte = function(value) {
+		return this.getTime() >= (new ExtendedDate(value)).getTime();
 	}
-	Date.prototype.gt = function(value) {
-		return this.getTime() > (new Date(value)).getTime();
+	ExtendedDate.prototype.gt = function(value) {
+		return this.getTime() > (new ExtendedDate(value)).getTime();
 	}
 	// http://www.pilcrow.nl/2012/09/javascript-date-isleapyear-and-getlastdayofmonth
-	//Date functions. (Caveat: months start at 0!)
-	Date.isLeapYear = function (iYear)
+	//ExtendedDate functions. (Caveat: months start at 0!)
+	ExtendedDate.isLeapYear = function (iYear)
 	{
-		return new Date(iYear, 1, 29).getDate() === 29;
+		return new ExtendedDate(iYear, 1, 29).getDate() === 29;
 	};
-	Date.prototype.isLeapYear = function ()
+	ExtendedDate.prototype.isLeapYear = function ()
 	{
-		return Date.isLeapYear(this.getFullYear());
+		return ExtendedDate.isLeapYear(this.getFullYear());
 	}
-	Date.getLastDayOfMonth = function (iMonth, iYear)
+	ExtendedDate.getLastDayOfMonth = function (iMonth, iYear)
 	{
 		if (/^([024679]|11)$/.test(iMonth)) {
 			return 31;
@@ -386,10 +398,11 @@
 		if (/^[358]$/.test(iMonth)) {
 			return 30;
 		}
-		return Date.isLeapYear(iYear) ? 29 : 28;
+		return ExtendedDate.isLeapYear(iYear) ? 29 : 28;
 	}
-	Date.prototype.getLastDayOfMonth = function ()
+	ExtendedDate.prototype.getLastDayOfMonth = function ()
 	{
-		return Date.getLastDayOfMonth(this.getMonth(), this.getFullYear());
+		return ExtendedDate.getLastDayOfMonth(this.getMonth(), this.getFullYear());
 	}
+	Date = ExtendedDate;
 }).call(this);

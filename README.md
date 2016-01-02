@@ -26,6 +26,8 @@ This package has a low score as a result of its primary intent, to extend built-
 
 # Release History (reverse chronological order)
 
+v0.0.10 2015-12-31 Modified so code does not directly overload built-in objects. First step to making built-in override developer selectable. Started adding unit tests.
+
 v0.0.9 2015-12-31 Added isLeapYear and getLastDayOfMonth functions for Date. Remove dependencies on Time and TimeSpan.
 
 v0.0.8 2015-12-13 Codacy improvements.
