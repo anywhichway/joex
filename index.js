@@ -1,5 +1,6 @@
 (function() {
 	"use strict";
+	var _global = this;
 	/*
 	 * https://github.com/Benvie
 	 * improvements 2015 by AnyWhichWay
@@ -84,7 +85,18 @@
 	  }
 	  return result
 	}
-	var ExtendedArray = Array;
+	function ExtendedArray() {
+		var instance;
+		if(arguments.length===1 && typeof(arguments[0])==="number") {
+			instance = new Array(aguments[0])
+		} else {
+			instance = new Array().concat(Array.prototype.slice.call(arguments));
+		}
+		Object.setPrototypeOf(instance,ExtendedArray.prototype);
+		return instance;
+	}
+	ExtendedArray.prototype = Object.create(Array.prototype);
+	ExtendedArray.prototype.constructor = Array;
 	ExtendedArray.prototype.intersects = function(array) {
 		return intersection(this,array).length>0;
 	}
@@ -104,10 +116,10 @@
 		return !this.includes(item);
 	}
 	ExtendedArray.prototype.eq = function(array) {
-		return array instanceof ExtendedArray && this.length===array.length && this.every(function(item,i) { return item==array[i];});
+		return array instanceof Array && this.length===array.length && this.every(function(item,i) { return item==array[i];});
 	}
 	ExtendedArray.prototype.neq = function(array) {
-		return !(array instanceof ExtendedArray) || this.length!==array.length && this.some(function(item,i) { return item!=array[i];});
+		return !(array instanceof Array) || this.length!==array.length && this.some(function(item,i) { return item!=array[i];});
 	}
 	ExtendedArray.prototype.min = function() {
 		var min;
@@ -159,7 +171,6 @@
 		return (sum===undefined ? NaN : sum / count);
 	}
 	Object.defineProperty(ExtendedArray.prototype,"count",{enumerable:true,get:function() { return this.length; },set:function() {}});
-	Array = ExtendedArray;
 	
 	function toArray(object) {
 		var array = [], values = object.values(), data = values.next();
@@ -169,7 +180,13 @@
 		} 
 		return array;
 	}
-	var ExtendedSet = Set;
+	function ExtendedSet(items) {
+		var instance = new Set(items);
+		Object.setPrototypeOf(instance,ExtendedSet.prototype);
+		return instance;
+	}
+	ExtendedSet.prototype = Object.create(Set.prototype);
+	ExtendedSet.prototype.constructor = Set;
 	ExtendedSet.prototype.every = function(f,thisarg) {
 		var me = (thisarg ? thisarg : this), i = 0;
 		for(var item of me) {
@@ -206,10 +223,10 @@
 		return crossproduct(toArray(this),test);
 	}
 	ExtendedSet.prototype.eq = function(set) {
-		return set instanceof ExtendedSet && this.size===set.size && this.coincident(set);
+		return set instanceof Set && this.size===set.size && this.coincident(set);
 	}
 	ExtendedSet.prototype.neq = function(set) {
-		return !(set instanceof ExtendedSet) || this.size!==set.size || !this.coincident(set);
+		return !(set instanceof Set) || this.size!==set.size || !this.coincident(set);
 	}
 	ExtendedSet.prototype.min = function() {
 		return toArray(this).min();
@@ -227,9 +244,14 @@
 		return toArray(this);
 	}
 	Object.defineProperty(ExtendedSet.prototype,"count",{enumerable:true,get:function() { return this.size; },set:function() { }});
-	Set = ExtendedSet;
 	
-	var ExtendedBoolean = Boolean;
+	function ExtendedBoolean(bool) {
+		var instance = new Boolean(bool);
+		Object.setPrototypeOf(instance,ExtendedBoolean.prototype);
+		return instance;
+	}
+	ExtendedBoolean.prototype = Object.create(Boolean.prototype);
+	ExtendedBoolean.prototype.constructor = Boolean;
 	ExtendedBoolean.prototype.lt = function(value) {
 		return this.valueOf() < value;
 	}
@@ -254,7 +276,6 @@
 	ExtendedBoolean.prototype.gt = function(value) {
 		return this.valueOf() > value;
 	}
-	Boolean = ExtendedBoolean;
 	
 	// soundex from https://gist.github.com/shawndumas/1262659
 	function soundex(s) {
@@ -281,7 +302,13 @@
 		
 		return (r + '000').slice(0, 4).toUpperCase();
 	}
-	var ExtendedString = String;
+	function ExtendedString(str) {
+		var instance = new String(str);
+		Object.setPrototypeOf(instance,ExtendedString.prototype);
+		return instance;
+	}
+	ExtendedString.prototype = Object.create(String.prototype);
+	ExtendedString.prototype.constructor = String;
 	ExtendedString.prototype.soundex = function() {
 		return soundex(this.valueOf());
 	}
@@ -319,9 +346,14 @@
 	ExtendedString.prototype.outside = function(a,b) {
 		return !this.between(a,b);
 	}
-	String = ExtendedString;
 	
-	var ExtendedNumber = Number;
+	function ExtendedNumber(num) {
+		var instance = new Number(num);
+		Object.setPrototypeOf(instance,ExtendedNumber.prototype);
+		return instance;
+	}
+	ExtendedNumber.prototype = Object.create(Number.prototype);
+	ExtendedNumber.prototype.constructor = Number;
 	ExtendedNumber.prototype.lt = function(value) {
 		return this.valueOf() < value;
 	}
@@ -353,9 +385,15 @@
 	ExtendedNumber.prototype.outside = function(a,b) {
 		return !this.between(a,b);
 	}
-	Number = ExtendedNumber;
 	
-	var ExtendedDate = Date;
+	function ExtendedDate() {
+		var str = "return new Date(" + (typeof(arguments[0])==="string" || arguments[0] instanceof Date ? "'"+arguments[0]+"'" : Array.prototype.slice.call(arguments).join(",")) + ")";
+		var instance = Function(str)();
+		Object.setPrototypeOf(instance,ExtendedDate.prototype);
+		return instance;
+	}
+	ExtendedDate.prototype = Object.create(Date.prototype);
+	ExtendedDate.prototype.constructor = Date;
 	ExtendedDate.prototype.lt = function(value) {
 		return this.getTime() < (new ExtendedDate(value)).getTime();
 	}
@@ -363,12 +401,12 @@
 		return this.getTime() <= (new ExtendedDate(value)).getTime();
 	}
 	ExtendedDate.prototype.eq = function(value) {
-		return this.getTime() == (new ExtendedDate(value)).getTime();
+		return this.getTime() === (new ExtendedDate(value)).getTime();
 	}
 	ExtendedDate.prototype.eeq = function(value) {
 		return this===value;
 	}
-	ExtendedDate.prototype.neq = function(value,precision) {
+	ExtendedDate.prototype.neq = function(value) {
 		return this.getTime() !== (new ExtendedDate(value)).getTime();
 	}
 	ExtendedDate.prototype.neeq = function(value) {
@@ -404,5 +442,24 @@
 	{
 		return ExtendedDate.getLastDayOfMonth(this.getMonth(), this.getFullYear());
 	}
-	Date = ExtendedDate;
+
+	
+	if (typeof(module) !== 'undefined' && module.exports) {
+		module.exports.ExtendedArray = ExtendedArray;
+		module.exports.ExtendedSet = ExtendedSet;
+		module.exports.ExtendedBoolean = ExtendedBoolean;
+		module.exports.ExtendedNumber = ExtendedNumber;
+		module.exports.ExtendedString = ExtendedString;
+		module.exports.ExtendedDate = ExtendedDate;
+	} else if (typeof define === 'function' && define.amd) {
+		// Publish as AMD module
+		define(function() {return {ExtendedArray:ExtendedArray,ExtendedSet:ExtendedSet,ExtendedBoolean:ExtendedBoolean,ExtendedNumber:ExtendedNumber,ExtendedString:ExtendedString,ExtendedDate:ExtendedDate};});
+	} else {
+		_global.ExtendedArray = ExtendedArray;
+		_global.ExtendedSet = ExtendedSet;
+		_global.ExtendedBoolean = ExtendedBoolean;
+		_global.ExtendedNumber = ExtendedNumber;
+		_global.ExtendedString = ExtendedString;
+		_global.ExtendedDate = ExtendedDate;
+	}
 }).call(this);
