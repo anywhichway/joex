@@ -85,93 +85,84 @@
 	  }
 	  return result
 	}
-	function ExtendedArray() {
-		var instance;
-		if(arguments.length===1 && typeof(arguments[0])==="number") {
-			instance = new Array(aguments[0])
-		} else {
-			instance = new Array().concat(Array.prototype.slice.call(arguments));
+	Array.extend = function() {
+		var ExtendedArray = Array;
+		ExtendedArray.prototype.intersects = function(array) {
+			return intersection(this,array).length>0;
 		}
-		Object.setPrototypeOf(instance,ExtendedArray.prototype);
-		return instance;
-	}
-	ExtendedArray.prototype = Object.create(Array.prototype);
-	ExtendedArray.prototype.constructor = Array;
-	ExtendedArray.prototype.intersects = function(array) {
-		return intersection(this,array).length>0;
-	}
-	ExtendedArray.prototype.disjoint = function(array) {
-		return intersection(this,array).length===0;
-	}
-	ExtendedArray.prototype.coincident = function(array) {
-		return intersection(this,array).length===this.length;
-	}
-	ExtendedArray.prototype.crossproduct = function(test) {
-		return crossproduct(this,test);
-	}
-	if(!ExtendedArray.prototype.includes) {
-		ExtendedArray.prototype.includes = function(item) { return this.indexOf(item)>=0; }
-	}
-	ExtendedArray.prototype.excludes = function(item) {
-		return !this.includes(item);
-	}
-	ExtendedArray.prototype.eq = function(array) {
-		return array instanceof Array && this.length===array.length && this.every(function(item,i) { return item==array[i];});
-	}
-	ExtendedArray.prototype.neq = function(array) {
-		return !(array instanceof Array) || this.length!==array.length && this.some(function(item,i) { return item!=array[i];});
-	}
-	ExtendedArray.prototype.min = function() {
-		var min;
-		this.forEach(function(item) {
-			if(min===undefined) {
-				min = item;
-			} else if(item < min) {
-				min = item;
-			}
-		});
-		return min;
-	}
-	ExtendedArray.prototype.max = function() {
-		var max;
-		this.forEach(function(item) {
-			if(max===undefined) {
-				max = item;
-			} else if(item > max) {
-				max = item;
-			}
-		});
-		return max;
-	}
-	ExtendedArray.prototype.sum = function() {
-		var sum;
-		this.forEach(function(item) {
-			if(typeof(item)==="number") {
-				if(sum===undefined) {
-					sum = item;
-				} else {
-					sum += item;
+		ExtendedArray.prototype.disjoint = function(array) {
+			return intersection(this,array).length===0;
+		}
+		ExtendedArray.prototype.coincident = function(array) {
+			return intersection(this,array).length===this.length;
+		}
+		ExtendedArray.prototype.crossproduct = function(test) {
+			return crossproduct(this,test);
+		}
+		if(!ExtendedArray.prototype.includes) {
+			ExtendedArray.prototype.includes = function(item) { return this.indexOf(item)>=0; }
+		}
+		ExtendedArray.prototype.excludes = function(item) {
+			return !this.includes(item);
+		}
+		ExtendedArray.prototype.eq = function(array) {
+			return array instanceof Array && this.length===array.length && this.every(function(item,i) { return item==array[i];});
+		}
+		ExtendedArray.prototype.neq = function(array) {
+			return !(array instanceof Array) || this.length!==array.length && this.some(function(item,i) { return item!=array[i];});
+		}
+		ExtendedArray.prototype.min = function() {
+			var min;
+			this.forEach(function(item) {
+				if(min===undefined) {
+					min = item;
+				} else if(item < min) {
+					min = item;
 				}
-			}
-		});
-		return (sum===undefined ? NaN : sum);
-	}
-	ExtendedArray.prototype.avg = function() {
-		var sum, count = 0;
-		this.forEach(function(item) {
-			if(typeof(item)==="number") {
-				count ++;
-				if(sum===undefined) {
-					sum = item;
-				} else {
-					sum += item;
+			});
+			return min;
+		}
+		ExtendedArray.prototype.max = function() {
+			var max;
+			this.forEach(function(item) {
+				if(max===undefined) {
+					max = item;
+				} else if(item > max) {
+					max = item;
 				}
-			}
-		});
-		return (sum===undefined ? NaN : sum / count);
+			});
+			return max;
+		}
+		ExtendedArray.prototype.sum = function() {
+			var sum;
+			this.forEach(function(item) {
+				if(typeof(item)==="number") {
+					if(sum===undefined) {
+						sum = item;
+					} else {
+						sum += item;
+					}
+				}
+			});
+			return (sum===undefined ? NaN : sum);
+		}
+		ExtendedArray.prototype.avg = function() {
+			var sum, count = 0;
+			this.forEach(function(item) {
+				if(typeof(item)==="number") {
+					count ++;
+					if(sum===undefined) {
+						sum = item;
+					} else {
+						sum += item;
+					}
+				}
+			});
+			return (sum===undefined ? NaN : sum / count);
+		}
+		Object.defineProperty(ExtendedArray.prototype,"count",{enumerable:true,configurable:true,get:function() { return this.length; },set:function() {}});
+		return ExtendedArray;
 	}
-	Object.defineProperty(ExtendedArray.prototype,"count",{enumerable:true,get:function() { return this.length; },set:function() {}});
-	
 	function toArray(object) {
 		var array = [], values = object.values(), data = values.next();
 		while (!data.done) {
@@ -180,102 +171,98 @@
 		} 
 		return array;
 	}
-	function ExtendedSet(items) {
-		var instance = new Set(items);
-		Object.setPrototypeOf(instance,ExtendedSet.prototype);
-		return instance;
-	}
-	ExtendedSet.prototype = Object.create(Set.prototype);
-	ExtendedSet.prototype.constructor = Set;
-	ExtendedSet.prototype.every = function(f,thisarg) {
-		var me = (thisarg ? thisarg : this), i = 0;
-		for(var item of me) {
-			if(!f(item,i)) {
-				return false;
+
+	Set.extend = function() {
+		var ExtendedSet = Set;
+		ExtendedSet.prototype.every = function(f,thisarg) {
+			var me = (thisarg ? thisarg : this), i = 0;
+			for(var item of me) {
+				if(!f(item,i)) {
+					return false;
+				}
+				i++;
 			}
-			i++;
+			return true;
 		}
-		return true;
-	}
-	ExtendedSet.prototype.some = function(f,thisarg) {
-		var me = (thisarg ? thisarg : this), i = 0;
-		for(var item of me) {
-			if(f(item,i)) {
-				return true;
+		ExtendedSet.prototype.some = function(f,thisarg) {
+			var me = (thisarg ? thisarg : this), i = 0;
+			for(var item of me) {
+				if(f(item,i)) {
+					return true;
+				}
+				i++;
 			}
-			i++;
+			return false;
 		}
-		return false;
+		ExtendedSet.prototype.intersects = function(iterable) {
+			var array = (iterable instanceof Array ? iterable : toArray(iterable));
+			return intersection(toArray(this),array).length>0;
+		}
+		ExtendedSet.prototype.disjoint = function(iterable) {
+			var array = (iterable instanceof Array ? iterable : toArray(iterable));
+			return intersection(toArray(this),array).length===0;
+		}
+		ExtendedSet.prototype.coincident = function(iterable) {
+			var array = (iterable instanceof Array ? iterable : toArray(iterable));
+			return array.length===this.size && intersection(toArray(this),array).length===this.size;
+		}
+		ExtendedSet.prototype.crossproduct = function(iterable,test) {
+			return crossproduct(toArray(this),test);
+		}
+		ExtendedSet.prototype.eq = function(set) {
+			return set instanceof Set && this.size===set.size && this.coincident(set);
+		}
+		ExtendedSet.prototype.neq = function(set) {
+			return !(set instanceof Set) || this.size!==set.size || !this.coincident(set);
+		}
+		ExtendedSet.prototype.min = function() {
+			return toArray(this).min();
+		}
+		ExtendedSet.prototype.max = function() {
+			return toArray(this).max();
+		}
+		ExtendedSet.prototype.sum = function() {
+			return toArray(this).sum();
+		}
+		ExtendedSet.prototype.avg= function() {
+			return toArray(this).avg();
+		}
+		ExtendedSet.prototype.toJSON = function() {
+			return toArray(this);
+		}
+		Object.defineProperty(ExtendedSet.prototype,"count",{configurable:true,enumerable:true,get:function() { return this.size; },set:function() { }});
+		return ExtendedSet;
 	}
-	ExtendedSet.prototype.intersects = function(iterable) {
-		var array = (iterable instanceof Array ? iterable : toArray(iterable));
-		return intersection(toArray(this),array).length>0;
-	}
-	ExtendedSet.prototype.disjoint = function(iterable) {
-		var array = (iterable instanceof Array ? iterable : toArray(iterable));
-		return intersection(toArray(this),array).length===0;
-	}
-	ExtendedSet.prototype.coincident = function(iterable) {
-		var array = (iterable instanceof Array ? iterable : toArray(iterable));
-		return array.length===this.size && intersection(toArray(this),array).length===this.size;
-	}
-	ExtendedSet.prototype.crossproduct = function(iterable,test) {
-		return crossproduct(toArray(this),test);
-	}
-	ExtendedSet.prototype.eq = function(set) {
-		return set instanceof Set && this.size===set.size && this.coincident(set);
-	}
-	ExtendedSet.prototype.neq = function(set) {
-		return !(set instanceof Set) || this.size!==set.size || !this.coincident(set);
-	}
-	ExtendedSet.prototype.min = function() {
-		return toArray(this).min();
-	}
-	ExtendedSet.prototype.max = function() {
-		return toArray(this).max();
-	}
-	ExtendedSet.prototype.sum = function() {
-		return toArray(this).sum();
-	}
-	ExtendedSet.prototype.avg= function() {
-		return toArray(this).avg();
-	}
-	ExtendedSet.prototype.toJSON = function() {
-		return toArray(this);
-	}
-	Object.defineProperty(ExtendedSet.prototype,"count",{enumerable:true,get:function() { return this.size; },set:function() { }});
 	
-	function ExtendedBoolean(bool) {
-		var instance = new Boolean(bool);
-		Object.setPrototypeOf(instance,ExtendedBoolean.prototype);
-		return instance;
+	Boolean.extend = function() {
+		var ExtendedBoolean = Boolean;
+		ExtendedBoolean.prototype.lt = function(value) {
+			return this.valueOf() < value;
+		};
+		ExtendedBoolean.prototype.lte = function(value) {
+			return this.valueOf() <= value;
+		};
+		ExtendedBoolean.prototype.eq = function(value) {
+			return this.valueOf() == value;
+		};
+		ExtendedBoolean.prototype.eeq = function(value) {
+			return this.valueOf() == value;
+		};
+		ExtendedBoolean.prototype.neq = function(value) {
+			return this.valueOf() != value;
+		};
+		ExtendedBoolean.prototype.neeq = function(value) {
+			return this.valueOf() !== value;
+		};
+		ExtendedBoolean.prototype.gte = function(value) {
+			return this.valueOf() >= value;
+		};
+		ExtendedBoolean.prototype.gt = function(value) {
+			return this.valueOf() > value;
+		};
+		return ExtendedBoolean;
 	}
-	ExtendedBoolean.prototype = Object.create(Boolean.prototype);
-	ExtendedBoolean.prototype.constructor = Boolean;
-	ExtendedBoolean.prototype.lt = function(value) {
-		return this.valueOf() < value;
-	}
-	ExtendedBoolean.prototype.lte = function(value) {
-		return this.valueOf() <= value;
-	}
-	ExtendedBoolean.prototype.eq = function(value) {
-		return this.valueOf() == value;
-	}
-	ExtendedBoolean.prototype.eeq = function(value) {
-		return this.valueOf() == value;
-	}
-	ExtendedBoolean.prototype.neq = function(value) {
-		return this.valueOf() != value;
-	}
-	ExtendedBoolean.prototype.neeq = function(value) {
-		return this.valueOf() !== value;
-	}
-	ExtendedBoolean.prototype.gte = function(value) {
-		return this.valueOf() >= value;
-	}
-	ExtendedBoolean.prototype.gt = function(value) {
-		return this.valueOf() > value;
-	}
+	
 	
 	// soundex from https://gist.github.com/shawndumas/1262659
 	function soundex(s) {
@@ -302,164 +289,180 @@
 		
 		return (r + '000').slice(0, 4).toUpperCase();
 	}
-	function ExtendedString(str) {
-		var instance = new String(str);
-		Object.setPrototypeOf(instance,ExtendedString.prototype);
-		return instance;
-	}
-	ExtendedString.prototype = Object.create(String.prototype);
-	ExtendedString.prototype.constructor = String;
-	ExtendedString.prototype.soundex = function() {
-		return soundex(this.valueOf());
-	}
-	ExtendedString.prototype.echoes = function(string) {
-		return soundex(this.valueOf())===soundex(string);
-	}
-	ExtendedString.prototype.lt = function(value) {
-		return this.valueOf() < value;
-	}
-	ExtendedString.prototype.lte = function(value) {
-		return this.valueOf() <= value;
-	}
-	ExtendedString.prototype.eq = function(value) {
-		return this.valueOf() == value;
-	}
-	ExtendedString.prototype.eeq = function(value) {
-		return this.valueOf() === value;
-	}
-	ExtendedString.prototype.neq = function(value) {
-		return this.valueOf() != value;
-	}
-	ExtendedString.prototype.neeq = function(value) {
-		return this.valueOf() !== value;
-	}
-	ExtendedString.prototype.gte = function(value) {
-		return this.valueOf() >= value;
-	}
-	ExtendedString.prototype.gt = function(value) {
-		return this.valueOf() > value;
-	}
-	ExtendedString.prototype.between = function(a,b) {
-		var value = this.valueOf();
-		return (value >= a && value <= b) || (value >= b && value <= a);
-	}
-	ExtendedString.prototype.outside = function(a,b) {
-		return !this.between(a,b);
+	
+	String.extend = function() {
+		var ExtendedString = String;
+		ExtendedString.prototype.soundex = function() {
+			return soundex(this.valueOf());
+		};
+		ExtendedString.prototype.echoes = function(string) {
+			return soundex(this.valueOf())===soundex(string);
+		};
+		ExtendedString.prototype.lt = function(value) {
+			return this.valueOf() < value;
+		};
+		ExtendedString.prototype.lte = function(value) {
+			return this.valueOf() <= value;
+		};
+		ExtendedString.prototype.eq = function(value) {
+			return this.valueOf() == value;
+		};
+		ExtendedString.prototype.eeq = function(value) {
+			return this.valueOf() === value;
+		};
+		ExtendedString.prototype.neq = function(value) {
+			return this.valueOf() != value;
+		};
+		ExtendedString.prototype.neeq = function(value) {
+			return this.valueOf() !== value;
+		};
+		ExtendedString.prototype.gte = function(value) {
+			return this.valueOf() >= value;
+		};
+		ExtendedString.prototype.gt = function(value) {
+			return this.valueOf() > value;
+		};
+		ExtendedString.prototype.between = function(a,b) {
+			var value = this.valueOf();
+			return (value >= a && value <= b) || (value >= b && value <= a);
+		};
+		ExtendedString.prototype.outside = function(a,b) {
+			return !this.between(a,b);
+		};
+		return ExtendedString;
 	}
 	
-	function ExtendedNumber(num) {
-		var instance = new Number(num);
-		Object.setPrototypeOf(instance,ExtendedNumber.prototype);
-		return instance;
-	}
-	ExtendedNumber.prototype = Object.create(Number.prototype);
-	ExtendedNumber.prototype.constructor = Number;
-	ExtendedNumber.prototype.lt = function(value) {
-		return this.valueOf() < value;
-	}
-	ExtendedNumber.prototype.lte = function(value) {
-		return this.valueOf() <= value;
-	}
-	ExtendedNumber.prototype.eq = function(value) {
-		return this.valueOf() == value;
-	}
-	ExtendedNumber.prototype.eeq = function(value) {
-		return this.valueOf() === value;
-	}
-	ExtendedNumber.prototype.neq = function(value) {
-		return this.valueOf() != value;
-	}
-	ExtendedNumber.prototype.neeq = function(value) {
-		return this.valueOf() !== value;
-	}
-	ExtendedNumber.prototype.gte = function(value) {
-		return this.valueOf() >= value;
-	}
-	ExtendedNumber.prototype.gt = function(value) {
-		return this.valueOf() > value;
-	}
-	ExtendedNumber.prototype.between = function(a,b) {
-		var value = this.valueOf();
-		return (value >= a && value <= b) || (value >= b && value <= a);
-	}
-	ExtendedNumber.prototype.outside = function(a,b) {
-		return !this.between(a,b);
+	Number.extend = function() {
+		var ExtendedNumber = Number;
+		ExtendedNumber.prototype.lt = function(value) {
+			return this.valueOf() < value;
+		};
+		ExtendedNumber.prototype.lte = function(value) {
+			return this.valueOf() <= value;
+		};
+		ExtendedNumber.prototype.eq = function(value) {
+			return this.valueOf() == value;
+		};
+		ExtendedNumber.prototype.eeq = function(value) {
+			return this.valueOf() === value;
+		};
+		ExtendedNumber.prototype.neq = function(value) {
+			return this.valueOf() != value;
+		};
+		ExtendedNumber.prototype.neeq = function(value) {
+			return this.valueOf() !== value;
+		};
+		ExtendedNumber.prototype.gte = function(value) {
+			return this.valueOf() >= value;
+		};
+		ExtendedNumber.prototype.gt = function(value) {
+			return this.valueOf() > value;
+		};
+		ExtendedNumber.prototype.between = function(a,b) {
+			var value = this.valueOf();
+			return (value >= a && value <= b) || (value >= b && value <= a);
+		};
+		ExtendedNumber.prototype.outside = function(a,b) {
+			return !this.between(a,b);
+		};
+		return ExtendedNumber;
 	}
 	
-	function ExtendedDate() {
-		var str = "return new Date(" + (typeof(arguments[0])==="string" || arguments[0] instanceof Date ? "'"+arguments[0]+"'" : Array.prototype.slice.call(arguments).join(",")) + ")";
-		var instance = Function(str)();
-		Object.setPrototypeOf(instance,ExtendedDate.prototype);
-		return instance;
+	var precisionMap = {
+			Y: "year",
+			M: "month",
+			D: "dayOfMonth",
+			h: "hours",
+			m: "minutes",
+			s: "seconds",
+			ms: "milliseconds"
 	}
-	ExtendedDate.prototype = Object.create(Date.prototype);
-	ExtendedDate.prototype.constructor = Date;
-	ExtendedDate.prototype.lt = function(value) {
-		return this.getTime() < (new ExtendedDate(value)).getTime();
+	Date.extend = function() {
+		var ExtendedDate = Date;
+		Object.defineProperty(ExtendedDate.prototype,"time",{enumerable:true,configurable:true,set:function(value) {  this.setTime(value);},get:function() { return this.getTime(); }});
+		Object.defineProperty(ExtendedDate.prototype,"year",{enumerable:true,configurable:true,set:function(value) {  return this.setFullYear(value);},get:function() { return this.getFullYear(); }});
+		Object.defineProperty(ExtendedDate.prototype,"fullYear",{enumerable:true,configurable:true,set:function(value) {  return this.setFullYear(value);},get:function() { return this.getFullYear(); }});
+		Object.defineProperty(ExtendedDate.prototype,"month",{enumerable:true,configurable:true,set:function(value) {  this.setMonth(value);},get:function() { return this.getMonth(); }});
+		Object.defineProperty(ExtendedDate.prototype,"dayOfMonth",{enumerable:true,configurable:true,set:function(value) {  this.setDate(value);},get:function() { return this.getDate(); }});
+		Object.defineProperty(ExtendedDate.prototype,"hours",{enumerable:true,configurable:true,set:function(value) {  this.setHours(value);},get:function() { return this.getHours(); }});
+		Object.defineProperty(ExtendedDate.prototype,"minutes",{enumerable:true,configurable:true,set:function(value) {  this.setMinutes(value);},get:function() { return this.getMinutes(); }});
+		Object.defineProperty(ExtendedDate.prototype,"seconds",{enumerable:true,configurable:true,set:function(value) {  this.setSeconds(value);},get:function() { return this.getSeconds(); }});
+		Object.defineProperty(ExtendedDate.prototype,"milliseconds",{enumerable:true,configurable:true,set:function(value) {  this.setMilliseconds(value);},get:function() { return this.getMilliseconds(); }});
+		ExtendedDate.prototype.lt = function(value,precision) {
+			precision = (precision ? [precisionMap[precision]] : "time");
+			return this[precision] < (new ExtendedDate(value))[precision];
+		};
+		ExtendedDate.prototype.lte = function(value,precision) {
+			precision = (precision ? [precisionMap[precision]] : "time");
+			return this[precision] <= (new ExtendedDate(value))[precision];
+		};
+		ExtendedDate.prototype.eq = function(value,precision) {
+			precision = (precision ? [precisionMap[precision]] : "time");
+			return this[precision] === (new ExtendedDate(value))[precision];
+		};
+		ExtendedDate.prototype.eeq = function(value) {
+			return this===value;
+		};
+		ExtendedDate.prototype.neq = function(value,precision) {
+			precision = (precision ? [precisionMap[precision]] : "time");
+			return this[precision] !== (new ExtendedDate(value))[precision];
+		};
+		ExtendedDate.prototype.neeq = function(value) {
+			return this!==value;
+		};
+		ExtendedDate.prototype.gte = function(value,precision) {
+			precision = (precision ? [precisionMap[precision]] : "time");
+			return this[precision] >= (new ExtendedDate(value))[precision];
+		};
+		ExtendedDate.prototype.gt = function(value,precision) {
+			precision = (precision ? [precisionMap[precision]] : "time");
+			return this[precision] > (new ExtendedDate(value))[precision];
+		};
+		// http://www.pilcrow.nl/2012/09/javascript-date-isleapyear-and-getlastdayofmonth
+		//ExtendedDate functions. (Caveat: months start at 0!)
+		ExtendedDate.isLeapYear = function (iYear)
+		{
+			return new ExtendedDate(iYear, 1, 29).getDate() === 29;
+		};
+		ExtendedDate.prototype.isLeapYear = function ()
+		{
+			return ExtendedDate.isLeapYear(this.getFullYear());
+		};
+		ExtendedDate.getLastDayOfMonth = function (iMonth, iYear)
+		{
+			if (/^([024679]|11)$/.test(iMonth)) {
+				return 31;
+			}
+			if (/^[358]$/.test(iMonth)) {
+				return 30;
+			}
+			return ExtendedDate.isLeapYear(iYear) ? 29 : 28;
+		};
+		ExtendedDate.prototype.getLastDayOfMonth = function ()
+		{
+			return ExtendedDate.getLastDayOfMonth(this.getMonth(), this.getFullYear());
+		};
+		return ExtendedDate;
 	}
-	ExtendedDate.prototype.lte = function(value) {
-		return this.getTime() <= (new ExtendedDate(value)).getTime();
-	}
-	ExtendedDate.prototype.eq = function(value) {
-		return this.getTime() === (new ExtendedDate(value)).getTime();
-	}
-	ExtendedDate.prototype.eeq = function(value) {
-		return this===value;
-	}
-	ExtendedDate.prototype.neq = function(value) {
-		return this.getTime() !== (new ExtendedDate(value)).getTime();
-	}
-	ExtendedDate.prototype.neeq = function(value) {
-		return this!==value;
-	}
-	ExtendedDate.prototype.gte = function(value) {
-		return this.getTime() >= (new ExtendedDate(value)).getTime();
-	}
-	ExtendedDate.prototype.gt = function(value) {
-		return this.getTime() > (new ExtendedDate(value)).getTime();
-	}
-	// http://www.pilcrow.nl/2012/09/javascript-date-isleapyear-and-getlastdayofmonth
-	//ExtendedDate functions. (Caveat: months start at 0!)
-	ExtendedDate.isLeapYear = function (iYear)
-	{
-		return new ExtendedDate(iYear, 1, 29).getDate() === 29;
-	};
-	ExtendedDate.prototype.isLeapYear = function ()
-	{
-		return ExtendedDate.isLeapYear(this.getFullYear());
-	}
-	ExtendedDate.getLastDayOfMonth = function (iMonth, iYear)
-	{
-		if (/^([024679]|11)$/.test(iMonth)) {
-			return 31;
-		}
-		if (/^[358]$/.test(iMonth)) {
-			return 30;
-		}
-		return ExtendedDate.isLeapYear(iYear) ? 29 : 28;
-	}
-	ExtendedDate.prototype.getLastDayOfMonth = function ()
-	{
-		return ExtendedDate.getLastDayOfMonth(this.getMonth(), this.getFullYear());
-	}
+	
 
 	
 	if (typeof(module) !== 'undefined' && module.exports) {
-		module.exports.ExtendedArray = ExtendedArray;
-		module.exports.ExtendedSet = ExtendedSet;
-		module.exports.ExtendedBoolean = ExtendedBoolean;
-		module.exports.ExtendedNumber = ExtendedNumber;
-		module.exports.ExtendedString = ExtendedString;
-		module.exports.ExtendedDate = ExtendedDate;
+		module.exports.Array = Array;
+		module.exports.Set = Set;
+		module.exports.Boolean = Boolean;
+		module.exports.Number = Number;
+		module.exports.String = String;
+		module.exports.Date = Date;
 	} else if (typeof define === 'function' && define.amd) {
 		// Publish as AMD module
 		define(function() {return {ExtendedArray:ExtendedArray,ExtendedSet:ExtendedSet,ExtendedBoolean:ExtendedBoolean,ExtendedNumber:ExtendedNumber,ExtendedString:ExtendedString,ExtendedDate:ExtendedDate};});
 	} else {
-		_global.ExtendedArray = ExtendedArray;
-		_global.ExtendedSet = ExtendedSet;
-		_global.ExtendedBoolean = ExtendedBoolean;
-		_global.ExtendedNumber = ExtendedNumber;
-		_global.ExtendedString = ExtendedString;
-		_global.ExtendedDate = ExtendedDate;
+		_global.Array = Array;
+		_global.Set = Set;
+		_global.ExtendedBoolean = Boolean;
+		_global.ExtendedNumber = Number;
+		_global.ExtendedString = String;
+		_global.Date = Date;
 	}
 }).call(this);
