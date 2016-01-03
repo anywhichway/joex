@@ -1,6 +1,6 @@
 {
   "name": "joex",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Javascript Object Extensions",
   "main": "index.js",
   "isomorphic":true,
