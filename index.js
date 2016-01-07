@@ -87,14 +87,33 @@
 	}
 	Array.extend = function() {
 		var ExtendedArray = Array;
+		ExtendedArray.prototype.intersection = function() {
+			if(arguments.length>0) {
+				var args = [].concat([this].concat(Array.prototype.slice.call(arguments)));
+				return intersection.apply(null,args);
+			}
+			return intersection(this);
+		}
 		ExtendedArray.prototype.intersects = function(array) {
-			return intersection(this,array).length>0;
+			if(arguments.length>0) {
+				var args = [].concat([this].concat(Array.prototype.slice.call(arguments)));
+				return intersection.apply(null,args).length>0;
+			}
+			return intersection(this).length>0;
 		}
 		ExtendedArray.prototype.disjoint = function(array) {
-			return intersection(this,array).length===0;
+			if(arguments.length>0) {
+				var args = [].concat([this].concat(Array.prototype.slice.call(arguments)));
+				return intersection.apply(null,args).length===0;
+			}
+			return intersection(this).length===0;
 		}
 		ExtendedArray.prototype.coincident = function(array) {
-			return intersection(this,array).length===this.length;
+			if(arguments.length>0) {
+				var args = [].concat([this].concat(Array.prototype.slice.call(arguments)));
+				return intersection.apply(null,args).length===this.length;
+			}
+			return intersection(this).length===this.length;
 		}
 		ExtendedArray.prototype.crossproduct = function(test) {
 			return crossproduct(this,test);
@@ -198,6 +217,10 @@
 				i++;
 			}
 			return false;
+		}
+		ExtendedSet.prototype.intersection = function(iterable) {
+			var array = (iterable instanceof Array ? iterable : toArray(iterable));
+			return intersection(toArray(this),array);
 		}
 		ExtendedSet.prototype.intersects = function(iterable) {
 			var array = (iterable instanceof Array ? iterable : toArray(iterable));

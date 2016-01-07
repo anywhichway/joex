@@ -7,9 +7,9 @@ Adds between and outside to Number and String.
 
 Adds soundex to String.
 
-Adds isLeapYear and getLastDayOfMonth methods to Date as well as properties for year, fullYear, month, etc.
+Adds isLeapYear and getLastDayOfMonth methods to Date as well as properties for year, fullYear, month, etc. Also adds data members to represent all of the parts of a Date so that they can be treated in a declaritive manner.
 
-Adds intersects, disjoint, coincident, crossproduct, min, max, avg to Array and Set.
+Adds intersection, intersects, disjoint, coincident, crossproduct, min, max, avg to Array and Set.
 
 Adds some, every, and toJSON to Set. toJSON results in an array like representation.
 
@@ -17,13 +17,15 @@ Adds some, every, and toJSON to Set. toJSON results in an array like representat
 
 ### Philosophy
 
+The design philosophy for most extensions is primarily driven be a need for additional functionality.
+
+Extensions are created by extending the *.prototype* for native constructors so that *instanceOf* behaves as expected across closures.
+
+For selectivity, extensions are only created upon request for any given class by calling */<constructor/>.extend()*.
+
 The design philosophy for Date involves making objects more declarative than is typical with Javascript because we find this leads to more concise and less bug prone code. It also happens to be useful when indexing objects for [JOQULAR](http://www.github.com/anywhichway/joqular) or other JSON data stores. This is accomplished through the use of Object.defineProperty on class prototypes to create virtual properties with get and set functions hidden from the application implementor, e.g. 
 
 ```Object.defineProperty(Date.prototype,"fullYear",{enumerable:true,configurable:true,set:function(value) { this.setFullYear(value); },get:function() {return this.getFullYear();}).```
-
-The design philosophy for the other extensions is primarily driven be a need for additional functionality.
-
-Extensions are created by extending the *.prototype* for native constructors so that *instanceOf* behaves as expected across closures.
 
 # Installation
 
@@ -75,6 +77,15 @@ Precision operates at the least number of milliseconds required to represent a D
 
 *.isLeapYear()* - Returns *true* if the instance is a leap year.
 
+### Number
+
+#### Methods
+
+*.between(a,b)* - Returns *true* if instances is between *a* and *b*, including the boundaries.
+
+*.outside(a,b)* - Returns *true* if instances is not between *a* and *b*.
+
+
 ### Set
 
 #### Methods
@@ -101,7 +112,9 @@ Supports the same extended summary methods as Array.
 
 # Release History (reverse chronological order)
 
-v0.1.1 2016-01-03 Added substantial amounts of documentation and unit tests. Add filter capability to *.sum* and *.avg*. Corrected a flaw in DAte precision that resulted in only part of a date being considered.
+v0.1.2 2016-01-07 Added *.intersection* to Array and Set. Enhanced *.intersects*,*.coincident*, and *.disjoint* to take any number of arguments, added more documentation and unit tests.
+
+v0.1.1 2016-01-03 Added substantial amounts of documentation and unit tests. Add filter capability to *.sum* and *.avg*. Corrected a flaw in Date precision that resulted in only part of a date being considered.
 
 v0.1.0 2015-12-31 Modified so code does not directly overload built-in objects. Started adding unit tests. This was a breaking change with respect to module loading, so semantic version was incremented.
 

@@ -27,10 +27,10 @@ describe('Array',function() {
 	it('avg ',function() {
 		expect(ea1.avg()).to.equal(2);
 	});
-	it('avg with null',function() {
+	it('avg with null ',function() {
 		expect(ea5.avg()).to.equal(1.5);
 	});
-	it('avg all',function() {
+	it('avg all ',function() {
 		expect(ea5.avg(true)).to.equal(1);
 	});
 	it('avg Date ',function() {
@@ -42,14 +42,32 @@ describe('Array',function() {
 	it('max ',function() {
 		expect(ea1.max()).to.equal(3);
 	});
+	it('max ',function() {
+		expect(new Array("a","b","c").max()).to.equal("c");
+	});
+	it('intersection self has same elements ',function() {
+		expect(ea1.intersection(ea1).every(function(item,i) { return item===ea1[i]; })).to.be.true;
+	});
+	it('intersects self is true ',function() {
+		expect(ea1.intersects()).to.be.true;
+	});
 	it('intersects ',function() {
 		expect(ea1.intersects(a)).to.be.true;
+	});
+	it('intersects multiple arguments',function() {
+		expect(ea1.intersects(a,a)).to.be.true;
 	});
 	it('coincident ',function() {
 		expect(ea1.coincident(a)).to.be.true;
 	});
 	it('disjoint ',function() {
 		expect(ea1.disjoint(ea2)).to.be.true;
+	});
+	it('includes ',function() {
+		expect(ea1.includes(1)).to.be.true;
+	});
+	it('excludes ',function() {
+		expect(ea1.excludes(-1)).to.be.true;
 	});
 });
 describe('Set',function() {
@@ -81,24 +99,63 @@ describe('Set',function() {
 	it('disjoint ',function() {
 		expect(sa1.disjoint(sa2)).to.be.true;
 	});
+	it('intersects Array ',function() {
+		expect(sa1.intersects([1,2,3])).to.be.true;
+	});
+	it('coincident Array ',function() {
+		expect(sa1.coincident([1,2,3])).to.be.true;
+	});
+	it('disjoint Array ',function() {
+		expect(sa1.disjoint([4,5,6])).to.be.true;
+	});
 });
 
 describe('Boolean',function() {
-	var b = true, eb = new Boolean(true);
-	it('eq ',function() {
-		expect(eb.eq(b)).to.be.true;
-	})
+	var t = true, f = false, etrue = new Boolean(true), efalse = new Boolean(false);
+	it('lt ',function() {
+		expect(efalse.lt(true)).to.be.true;
+	});
+	it('lt Object',function() {
+		expect(efalse.lt(t)).to.be.true;
+	});
+	it('eq false',function() {
+		expect(efalse.eq(f)).to.be.true;
+	});
+	it('eq true',function() {
+		expect(etrue.eq(t)).to.be.true;
+	});
+	it('gt ',function() {
+		expect(etrue.gt(false)).to.be.true;
+	});
+	it('gt Object',function() {
+		expect(etrue.gt(efalse)).to.be.true;
+	});
 });
 
 
 describe('Number',function() {
 	var n = 1, en = new Number(1);
+	it('lt ',function() {
+		expect(en.lt(2)).to.be.true;
+	});
 	it('eq ',function() {
 		expect(en.eq(n)).to.be.true;
-	})
+	});
+	it('eq Number',function() {
+		expect(en.eq(n)).to.be.true;
+	});
+	it('gt ',function() {
+		expect(en.gt(0)).to.be.true;
+	});
 	it('between ', function() {
 		expect(en.between(0,2)).to.be.true;
-	})
+	});
+	it('between on boundary', function() {
+		expect(en.between(1,2)).to.be.true;
+	});
+	it('outside ', function() {
+		expect(en.outside(3,4)).to.be.true;
+	});
 });
 
 describe('String',function() {
@@ -111,7 +168,16 @@ describe('String',function() {
 	});
 	it('soundex to fail',function() {
 		expect(es.echoes("a nmbr")).to.be.false;
-	})
+	});
+	it('between ', function() {
+		expect(es.between("*","b")).to.be.true;
+	});
+	it('between on boundary', function() {
+		expect(es.between(es,"b")).to.be.true;
+	});
+	it('outside ', function() {
+		expect(es.outside("b","d")).to.be.true;
+	});
 });
 
 describe('Date',function() {
