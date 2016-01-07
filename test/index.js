@@ -21,6 +21,9 @@ describe('Array',function() {
 	it('min ',function() {
 		expect(ea1.min()).to.equal(1);
 	});
+	it('min NaN',function() {
+		expect(isNaN([].min())).to.be.true;
+	});
 	it('min ',function() {
 		expect(new Array("c","b","a").min()).to.equal("a");
 	});
@@ -39,11 +42,17 @@ describe('Array',function() {
 	it('avg Date with null ',function() {
 		expect(ea3.avg()).to.equal(now.getTime());
 	});
+	it('avg NaN ',function() {
+		expect(isNaN([].avg())).to.be.true;
+	});
 	it('max ',function() {
 		expect(ea1.max()).to.equal(3);
 	});
 	it('max ',function() {
 		expect(new Array("a","b","c").max()).to.equal("c");
+	});
+	it('max ',function() {
+		expect(isNaN([].max())).to.be.true;
 	});
 	it('intersection self has same elements ',function() {
 		expect(ea1.intersection(ea1).every(function(item,i) { return item===ea1[i]; })).to.be.true;
@@ -150,8 +159,11 @@ describe('Number',function() {
 	it('between ', function() {
 		expect(en.between(0,2)).to.be.true;
 	});
-	it('between on boundary', function() {
+	it('between on first boundary', function() {
 		expect(en.between(1,2)).to.be.true;
+	});
+	it('between on second boundary', function() {
+		expect(en.between(2,1)).to.be.true;
 	});
 	it('outside ', function() {
 		expect(en.outside(3,4)).to.be.true;
@@ -172,8 +184,11 @@ describe('String',function() {
 	it('between ', function() {
 		expect(es.between("*","b")).to.be.true;
 	});
-	it('between on boundary', function() {
+	it('between on first boundary', function() {
 		expect(es.between(es,"b")).to.be.true;
+	});
+	it('between on second boundary', function() {
+		expect(es.between("b",es)).to.be.true;
 	});
 	it('outside ', function() {
 		expect(es.outside("b","d")).to.be.true;

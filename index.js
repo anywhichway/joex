@@ -435,33 +435,27 @@
 		Object.defineProperty(ExtendedDate.prototype,"seconds",{enumerable:true,configurable:true,set:function(value) {  this.setSeconds(value);},get:function() { return this.getSeconds(); }});
 		Object.defineProperty(ExtendedDate.prototype,"milliseconds",{enumerable:true,configurable:true,set:function(value) {  this.setMilliseconds(value);},get:function() { return this.getMilliseconds(); }});
 		ExtendedDate.prototype.lt = function(value,precision) {
-			precision = (precision ? [precisionMap[precision]] : "time");
 			return toPrecision(this.getTime(),precision) < toPrecision(value,precision);
 		};
 		ExtendedDate.prototype.lte = function(value,precision) {
-			precision = (precision ? [precisionMap[precision]] : "time");
 			return toPrecision(this.getTime(),precision) <= toPrecision(value,precision);
 		};
 		ExtendedDate.prototype.eq = function(value,precision) {
-			precision = (precision ? [precisionMap[precision]] : "time");
 			return toPrecision(this.getTime(),precision) === toPrecision(value,precision);
 		};
 		ExtendedDate.prototype.eeq = function(value) {
 			return this===value;
 		};
 		ExtendedDate.prototype.neq = function(value,precision) {
-			precision = (precision ? [precisionMap[precision]] : "time");
 			return toPrecision(this.getTime(),precision) !== toPrecision(value,precision);
 		};
 		ExtendedDate.prototype.neeq = function(value) {
 			return this!==value;
 		};
 		ExtendedDate.prototype.gte = function(value,precision) {
-			precision = (precision ? [precisionMap[precision]] : "time");
 			return toPrecision(this.getTime(),precision) >= toPrecision(value,precision);
 		};
 		ExtendedDate.prototype.gt = function(value,precision) {
-			precision = (precision ? [precisionMap[precision]] : "time");
 			return toPrecision(this.getTime(),precision) > toPrecision(value,precision);
 		};
 		// http://www.pilcrow.nl/2012/09/javascript-date-isleapyear-and-getlastdayofmonth
