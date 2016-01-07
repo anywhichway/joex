@@ -14,7 +14,8 @@ Adds intersection, intersects, disjoint, coincident, crossproduct, min, max, avg
 Adds some, every, and toJSON to Set. Adds toJSON, which results in an array like representation.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/8ff33e04aa48424c97f63740e87afd9d)](https://www.codacy.com/app/syblackwell/joex)
-[![NPM](https://nodei.co/npm/joex.png?downloads=true&downloadRank=true&stars=true)(https://nodei.co/npm/<joex>/)
+
+[![NPM](https://nodei.co/npm/joex.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/<joex>/)
 
 ### Philosophy
 
