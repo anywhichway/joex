@@ -343,7 +343,7 @@
 			return this === value;
 		};
 		ExtendedString.prototype.neq = function(value) {
-			return this.valueOf() != value;
+			return !eq(this.valueOf(),value);
 		};
 		ExtendedString.prototype.neeq = function(value) {
 			return this.valueOf() !== value;

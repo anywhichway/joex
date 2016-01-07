@@ -14,6 +14,7 @@ Adds intersection, intersects, disjoint, coincident, crossproduct, min, max, avg
 Adds some, every, and toJSON to Set. Adds toJSON, which results in an array like representation.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/8ff33e04aa48424c97f63740e87afd9d)](https://www.codacy.com/app/syblackwell/joex)
+[![NPM](https://nodei.co/npm/joex.png?downloads=true&downloadRank=true&stars=true)(https://nodei.co/npm/<joex>/)
 
 ### Philosophy
 
@@ -33,7 +34,7 @@ npm install joex
 
 The index.js and package.json files are compatible with node-require so that joex can be served directly to the browser from the node-modules/joex directory when using node Express.
 
-To modify the global objects a web browser set the global object to its extended equivalent, e.g. Date = Date.extend() To access them in node.js use the normal require syntax, e.g.
+To modify the global objects in a web browser set the global object to its extended equivalent, e.g. Date = Date.extend() To access them in node.js use the normal require syntax, e.g.
 
 ```
 var Date = require("joex").Date.extend()
