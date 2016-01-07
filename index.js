@@ -1,6 +1,10 @@
 (function() {
 	"use strict";
 	var _global = this;
+	
+	function eq(a,b) {
+		return a==b;
+	}
 	/*
 	 * https://github.com/Benvie
 	 * improvements 2015 by AnyWhichWay
@@ -271,16 +275,16 @@
 			return this.valueOf() <= value;
 		};
 		ExtendedBoolean.prototype.eq = function(value) {
-			return this.valueOf() == value;
+			return eq(this.valueOf(),value);
 		};
 		ExtendedBoolean.prototype.eeq = function(value) {
-			return this.valueOf() == value;
+			return this === value;
 		};
 		ExtendedBoolean.prototype.neq = function(value) {
 			return this.valueOf() != value;
 		};
 		ExtendedBoolean.prototype.neeq = function(value) {
-			return this.valueOf() !== value;
+			return this !== value;
 		};
 		ExtendedBoolean.prototype.gte = function(value) {
 			return this.valueOf() >= value;
@@ -333,10 +337,10 @@
 			return this.valueOf() <= value;
 		};
 		ExtendedString.prototype.eq = function(value) {
-			return this.valueOf() == value;
+			return eq(this.valueOf(),value);
 		};
 		ExtendedString.prototype.eeq = function(value) {
-			return this.valueOf() === value;
+			return this === value;
 		};
 		ExtendedString.prototype.neq = function(value) {
 			return this.valueOf() != value;
@@ -369,16 +373,16 @@
 			return this.valueOf() <= value;
 		};
 		ExtendedNumber.prototype.eq = function(value) {
-			return this.valueOf() == value;
+			return eq(this.valueOf(),value);
 		};
 		ExtendedNumber.prototype.eeq = function(value) {
-			return this.valueOf() === value;
+			return this === value;
 		};
 		ExtendedNumber.prototype.neq = function(value) {
 			return this.valueOf() != value;
 		};
 		ExtendedNumber.prototype.neeq = function(value) {
-			return this.valueOf() !== value;
+			return this !== value;
 		};
 		ExtendedNumber.prototype.gte = function(value) {
 			return this.valueOf() >= value;

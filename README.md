@@ -7,11 +7,11 @@ Adds between and outside to Number and String.
 
 Adds soundex to String.
 
-Adds isLeapYear and getLastDayOfMonth methods to Date as well as properties for year, fullYear, month, etc. Also adds data members to represent all of the parts of a Date so that they can be treated in a declaritive manner.
+Adds isLeapYear and getLastDayOfMonth methods to Date as well as properties for year, fullYear, month, etc. Also adds data members to represent all of the parts of a Date so that they can be treated in a declarative manner.
 
 Adds intersection, intersects, disjoint, coincident, crossproduct, min, max, avg to Array and Set.
 
-Adds some, every, and toJSON to Set. toJSON results in an array like representation.
+Adds some, every, and toJSON to Set. Adds toJSON, which results in an array like representation.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/8ff33e04aa48424c97f63740e87afd9d)](https://www.codacy.com/app/syblackwell/joex)
 
