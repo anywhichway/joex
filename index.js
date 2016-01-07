@@ -98,21 +98,21 @@
 			}
 			return intersection(this);
 		}
-		ExtendedArray.prototype.intersects = function(array) {
+		ExtendedArray.prototype.intersects = function() {
 			if(arguments.length>0) {
 				var args = [].concat([this].concat(Array.prototype.slice.call(arguments)));
 				return intersection.apply(null,args).length>0;
 			}
 			return intersection(this).length>0;
 		}
-		ExtendedArray.prototype.disjoint = function(array) {
+		ExtendedArray.prototype.disjoint = function() {
 			if(arguments.length>0) {
 				var args = [].concat([this].concat(Array.prototype.slice.call(arguments)));
 				return intersection.apply(null,args).length===0;
 			}
 			return intersection(this).length===0;
 		}
-		ExtendedArray.prototype.coincident = function(array) {
+		ExtendedArray.prototype.coincident = function() {
 			if(arguments.length>0) {
 				var args = [].concat([this].concat(Array.prototype.slice.call(arguments)));
 				return intersection.apply(null,args).length===this.length;
@@ -129,10 +129,10 @@
 			return !this.includes(item);
 		}
 		ExtendedArray.prototype.eq = function(array) {
-			return array instanceof Array && this.length===array.length && this.every(function(item,i) { return item==array[i];});
+			return array instanceof Array && this.length===array.length && this.every(function(item,i) { return eq(item,array[i]);});
 		}
 		ExtendedArray.prototype.neq = function(array) {
-			return !(array instanceof Array) || this.length!==array.length && this.some(function(item,i) { return item!=array[i];});
+			return !(array instanceof Array) || this.length!==array.length && this.some(function(item,i) { return !eq(item,array[i]);});
 		}
 		ExtendedArray.prototype.min = function() {
 			var min;
@@ -281,7 +281,7 @@
 			return this === value;
 		};
 		ExtendedBoolean.prototype.neq = function(value) {
-			return this.valueOf() != value;
+			return !eq(this.valueOf(),value);
 		};
 		ExtendedBoolean.prototype.neeq = function(value) {
 			return this !== value;
@@ -379,7 +379,7 @@
 			return this === value;
 		};
 		ExtendedNumber.prototype.neq = function(value) {
-			return this.valueOf() != value;
+			return !eq(this.valueOf(),value);
 		};
 		ExtendedNumber.prototype.neeq = function(value) {
 			return this !== value;
@@ -400,15 +400,6 @@
 		return ExtendedNumber;
 	}
 	
-	var precisionMap = {
-			Y: "year",
-			M: "month",
-			D: "dayOfMonth",
-			h: "hours",
-			m: "minutes",
-			s: "seconds",
-			ms: "milliseconds"
-	}
 	function toPrecision(milliseconds,precision) {
 		var dt = new Date(milliseconds), yr = dt.getFullYear();
 		var M1, D1, h1, m1, s1, ms1;
