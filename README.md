@@ -21,13 +21,18 @@ Adds some, every, and toJSON to Set. Adds toJSON, which results in an array like
 
 The design philosophy for most extensions is primarily driven be a need for additional functionality.
 
+Note, there are risks in using polyfills as documented here: http://adamsilver.io/articles/the-disadvantages-of-javascript-polyfills/. However, we have found there are cases where facades and wrappers will not work, making polyfills or subclassing the only choice, i.e. where instanceof semantics must be preserved or major portions of existing code will have to be re-written (introducing yet another set of risks). We attempted to develop the library using subclassing; however, the Chrome engine does some internal checking on instances before method invocation and we were getting errors related to generic function calls and instances not being of the correct type. We will continue to endeavor to enhance this library so that it does not compel the use of a polyfill so that all choice is in the end developer's hands. Meanwhile, the library was designed in such a way that the programmer has the ability to select which polyfills to use and can take the risks in an informed manner.
+
 Extensions are created by extending the *.prototype* for native constructors so that *instanceOf* behaves as expected across closures.
 
 For selectivity, extensions are only created upon request for any given class by calling */<constructor/>.extend()*.
 
-The design philosophy for Date involves making objects more declarative than is typical with Javascript because we find this leads to more concise and less bug prone code. It also happens to be useful when indexing objects for [JOQULAR](http://www.github.com/anywhichway/joqular) or other JSON data stores. This is accomplished through the use of Object.defineProperty on class prototypes to create virtual properties with get and set functions hidden from the application implementor, e.g. 
+The design philosophy for Date involves making objects more declarative than is typical with Javascript because we find this leads to more concise and less bug prone code. It also happens to be useful when indexing objects for [JOQULAR](http://www.github.com/anywhichway/joqular) or other JSON data stores. This is accomplished through the use of Object.defineProperty on class prototypes to create virtual properties with get and set functions, e.g. 
 
 ```Object.defineProperty(Date.prototype,"fullYear",{enumerable:true,configurable:true,set:function(value) { this.setFullYear(value); },get:function() {return this.getFullYear();}).```
+
+Since they are semantically un-necessary the *.toJSON* method for Date is not updated to add these properties and they will not be persisted.
+
 
 # Installation
 
@@ -113,6 +118,8 @@ Supports the same extended summary methods as Array.
 *.soundex()* - Returns soundex encoding of instance.
 
 # Release History (reverse chronological order)
+
+v0.1.3 2016-01-09 Updated documentation to alert users to the risks of polyfills.
 
 v0.1.2 2016-01-07 Added *.intersection* to Array and Set. Enhanced *.intersects*,*.coincident*, and *.disjoint* to take any number of arguments, added more documentation and unit tests.
 
