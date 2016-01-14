@@ -1,17 +1,17 @@
 # joex
 Javascript Object Extensions
 
-Adds lt, lte, eq, neq, gte, gt to Number, String, Boolean, Date. Dates can be compared with precision, e.g. *.lt(date,"Y")*.
+Adds *.lt, .lte, .eq, .neq, .gte, .gt* to Number, String, Boolean, Date. Dates can be compared with precision, e.g. *.lt(date,"Y")*.
 
-Adds between and outside to Number and String.
+Adds *.between* and *.outside* to Number and String.
 
-Adds soundex to String.
+Adds *.echoes(string)* and *.soundex* to String.
 
-Adds isLeapYear and getLastDayOfMonth methods to Date as well as properties for year, fullYear, month, etc. Also adds data members to represent all of the parts of a Date so that they can be treated in a declarative manner.
+Adds isLeapYear and getLastDayOfMonth methods to Date. Also adds data members to represent all of the parts of a Date so that they can be treated in a declarative manner, e.g. year, fullYear, month, etc.
 
-Adds intersection, intersects, disjoint, coincident, crossproduct, min, max, avg to Array and Set.
+Adds *.intersection, .intersects, .disjoint, .coincident, .crossproduct, .min, .max, .avg* to Array and Set.
 
-Adds some, every, and toJSON to Set. Adds toJSON, which results in an array like representation.
+Adds *.some*, *.every*, and *.toJSON* to Set. *.toJSON* results in an array like representation.
 
 [![Build Status](https://travis-ci.org/anywhichway/joex.svg)](https://travis-ci.org/anywhichway/joex)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/8ff33e04aa48424c97f63740e87afd9d)](https://www.codacy.com/app/syblackwell/joex)
@@ -65,7 +65,7 @@ Number, String, Boolean support *.lt, .lte, .eq, .neq, .gte, .gt*. See Array, Se
 
 *.min()* - Returns the max value in the array.
 
-*.sum(filter)* - Returns the avg value of numeric values or items coerceable into numerics (e.g. Date, Time) in the array. Non-numeric values are ignored unless *all* is a function and returns a numeric when called with a value. In which case, the numeric is added to the sum. If it returns a non-numeric, the value is ignored.
+*.sum(filter)* - Returns the avg value of numeric values or items coerceable into numerics (e.g. Date, Time) in the array. Non-numeric values are ignored unless *all* is a function and returns a numeric when called with a value; in which case, the numeric is added to the sum. If the function returns a non-numeric, the value is ignored.
 
 ### Date
 
@@ -91,9 +91,9 @@ Precision operates at the least number of milliseconds required to represent a D
 
 #### Methods
 
-*.between(a,b)* - Returns *true* if instances is between *a* and *b*, including the boundaries.
+*.between(a,b)* - Returns *true* if instance is between *a* and *b*, including the boundaries.
 
-*.outside(a,b)* - Returns *true* if instances is not between *a* and *b*.
+*.outside(a,b)* - Returns *true* if instance is not between *a* and *b*.
 
 
 ### Set
