@@ -13,7 +13,10 @@ Adds intersection, intersects, disjoint, coincident, crossproduct, min, max, avg
 
 Adds some, every, and toJSON to Set. Adds toJSON, which results in an array like representation.
 
+[![Build Status](https://travis-ci.org/anywhichway/joex.svg)](https://travis-ci.org/anywhichway/joex)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/8ff33e04aa48424c97f63740e87afd9d)](https://www.codacy.com/app/syblackwell/joex)
+[![Code Climate](https://codeclimate.com/github/anywhichway/joex/badges/gpa.svg)](https://codeclimate.com/github/anywhichway/joex)
+[![Issue Count](https://codeclimate.com/github/anywhichway/joex/badges/issue_count.svg)](https://codeclimate.com/github/anywhichway/joex)
 
 [![NPM](https://nodei.co/npm/joex.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/<joex>/)
 
