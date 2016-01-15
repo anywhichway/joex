@@ -16,6 +16,8 @@ Adds *.some*, *.every*, and *.toJSON* to Set. *.toJSON* results in an array like
 [![Build Status](https://travis-ci.org/anywhichway/joex.svg)](https://travis-ci.org/anywhichway/joex)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/8ff33e04aa48424c97f63740e87afd9d)](https://www.codacy.com/app/syblackwell/joex)
 [![Code Climate](https://codeclimate.com/github/anywhichway/joex/badges/gpa.svg)](https://codeclimate.com/github/anywhichway/joex)
+[![Test Coverage](https://codeclimate.com/github/anywhichway/joex/badges/coverage.svg)](https://codeclimate.com/github/anywhichway/joex/coverage)
+[![Issue Count](https://codeclimate.com/github/anywhichway/joex/badges/issue_count.svg)](https://codeclimate.com/github/anywhichway/joex)
 
 
 [![NPM](https://nodei.co/npm/joex.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/<joex>/)
@@ -125,6 +127,8 @@ Supports the same extended summary methods as Array.
 Building & testing is conducted using Travis, Mocha, Chai, and Istanbul. 
 
 # Release History (reverse chronological order)
+
+v0.1.4 2016-01-15 Updated Set *.every* and *.some* to avoid use of not yet generally supported *for ... of ...* construct. Added unit tests. Updated badges.
 
 v0.1.3 2016-01-09 Updated documentation to alert users to the risks of polyfills.
 

@@ -203,9 +203,9 @@
 	Set.extend = function() {
 		var ExtendedSet = Set;
 		ExtendedSet.prototype.every = function(f,thisarg) {
-			var me = (thisarg ? thisarg : this), i = 0;
-			for(var item of me) {
-				if(!f(item,i)) {
+			var me = (thisarg ? thisarg : this), i = 0, items = me.values(), item;
+			while((item=items.next()) && item && !item.done) {
+				if(!f(item.value,i)) {
 					return false;
 				}
 				i++;
@@ -213,9 +213,9 @@
 			return true;
 		}
 		ExtendedSet.prototype.some = function(f,thisarg) {
-			var me = (thisarg ? thisarg : this), i = 0;
-			for(var item of me) {
-				if(f(item,i)) {
+			var me = (thisarg ? thisarg : this), i = 0, items = me.values(), item;
+			while((item=items.next()) && item && !item.done) {
+				if(f(item.value,i)) {
 					return true;
 				}
 				i++;

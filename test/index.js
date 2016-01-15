@@ -96,6 +96,16 @@ describe('Set',function() {
 	it('avg ',function() {
 		expect(sa1.avg()).to.equal(2);
 	});
+	it('every ', function() {
+		expect(a.every(function(item) {
+			return item!=0;
+		})).to.be.true;
+	});
+	it('some ', function() {
+		expect(a.some(function(item) {
+			return item===3;
+		})).to.be.true;
+	});
 	it('max ',function() {
 		expect(sa1.max()).to.equal(3);
 	});

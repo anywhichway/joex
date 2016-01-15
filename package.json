@@ -1,13 +1,12 @@
 {
   "name": "joex",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Javascript Object Extensions",
   "main": "index.js",
   "isomorphic": true,
   "scripts": {
-    "test": "istanbul cover node_modules/mocha/bin/_mocha --report lcov -- -R spec",
-    "badge": "coverage-badge `coverage-percentage ./coverage/lcov.info --lcov` badge.png"
-  },
+    "test": "istanbul cover node_modules/mocha/bin/_mocha --report lcov -- -R spec"
+   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anywhichway/joex.git"
@@ -51,7 +50,7 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "codeclimate-test-reporter": "^0.2.0",
-    "istanbul": "^0.4.1",
+    "istanbul": "^0.4.2",
     "mocha": "^2.3.4"
   }
 }
