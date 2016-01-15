@@ -41,9 +41,9 @@ Since they are semantically un-necessary the *.toJSON* method for Date is not up
 
 npm install joex
 
-The index.js and package.json files are compatible with node-require so that joex can be served directly to the browser from the node-modules/joex directory when using node Express.
+The index.js and package.json files are compatible with https://github.com/anywhichway/node-require so that joex can be served directly to the browser from the node-modules/joex directory when using node Express.
 
-To modify the global objects in a web browser set the global object to its extended equivalent, e.g. Date = Date.extend() To access them in node.js use the normal require syntax, e.g.
+To modify the global objects in a web browser, set the global object to its extended equivalent, e.g. Date = Date.extend() To access them in node.js use the normal require syntax, e.g.
 
 ```
 var Date = require("joex").Date.extend()
@@ -119,6 +119,10 @@ Supports the same extended summary methods as Array.
 *.outside(a,b)* - Returns *true* if instances is not between *a* and *b*.
 
 *.soundex()* - Returns soundex encoding of instance.
+
+# Building & Testing
+
+Building & testing is conducted using Travis, Mocha, Chai, and Istanbul. 
 
 # Release History (reverse chronological order)
 
