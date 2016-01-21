@@ -128,7 +128,7 @@ Building & testing is conducted using Travis, Mocha, Chai, and Istanbul.
 
 # Release History (reverse chronological order)
 
-v0.1.5 2016-01-21 Reworked module closure wrapper so it would work regardless of wether *browserify* is used. 
+v0.1.5 2016-01-21 Reworked module closure wrapper so it would work regardless of whether *browserify* is used. 
 
 v0.1.4 2016-01-15 Updated Set *.every* and *.some* to avoid use of not yet generally supported *for ... of ...* construct. Added unit tests. Updated badges.
 
