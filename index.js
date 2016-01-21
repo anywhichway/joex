@@ -1,7 +1,10 @@
+//     joex
+//
+//     Copyright (c) 2015, 2016 Simon Y. Blackwell, AnyWhichWay
+//     MIT License - http://opensource.org/licenses/mit-license.php
 (function() {
 	"use strict";
-	var _global = this;
-	
+
 	function eq(a,b) {
 		return a==b;
 	}
@@ -482,22 +485,22 @@
 	
 
 	
-	if (typeof(module) !== 'undefined' && module.exports) {
-		module.exports.Array = Array;
-		module.exports.Set = Set;
-		module.exports.Boolean = Boolean;
-		module.exports.Number = Number;
-		module.exports.String = String;
-		module.exports.Date = Date;
+	if (this.exports) {
+		this.exports.Array = Array;
+		this.exports.Set = Set;
+		this.exports.Boolean = Boolean;
+		this.exports.Number = Number;
+		this.exports.String = String;
+		this.exports.Date = Date;
 	} else if (typeof define === 'function' && define.amd) {
 		// Publish as AMD module
 		define(function() {return {ExtendedArray:ExtendedArray,ExtendedSet:ExtendedSet,ExtendedBoolean:ExtendedBoolean,ExtendedNumber:ExtendedNumber,ExtendedString:ExtendedString,ExtendedDate:ExtendedDate};});
 	} else {
-		_global.Array = Array;
-		_global.Set = Set;
-		_global.ExtendedBoolean = Boolean;
-		_global.ExtendedNumber = Number;
-		_global.ExtendedString = String;
-		_global.Date = Date;
+		this.Array = Array;
+		this.Set = Set;
+		this.ExtendedBoolean = Boolean;
+		this.ExtendedNumber = Number;
+		this.ExtendedString = String;
+		this.Date = Date;
 	}
-}).call(this);
+}).call((typeof(window)!=='undefined' ? window : (typeof(module)!=='undefined' ? module : null)));

@@ -1,11 +1,14 @@
 {
   "name": "joex",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Javascript Object Extensions",
   "main": "index.js",
+  "client": "./browser/chrome-proxy.js",
   "isomorphic": true,
   "scripts": {
-    "test": "istanbul cover node_modules/mocha/bin/_mocha --report lcov -- -R spec"
+    "test": "istanbul cover node_modules/mocha/bin/_mocha --report lcov -- -R spec",
+    "browserify": "browserify index.js -o browser/joex.js",
+    "minify": "minify browser/joex.js"
    },
   "repository": {
     "type": "git",
