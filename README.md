@@ -45,10 +45,11 @@ npm install joex
 
 The index.js and package.json files are compatible with https://github.com/anywhichway/node-require so that joex can be served directly to the browser from the node-modules/joex directory when using node Express.
 
-To modify the global objects in a web browser, set the global object to its extended equivalent, e.g. Date = Date.extend() To access them in node.js use the normal require syntax, e.g.
+To modify the global objects, set the global object to its extended equivalent, e.g. Date = Date.extend().
 
 ```
-var Date = require("joex").Date.extend()
+require("joex");
+var Date = Date.extend()
 ```
 
 ## Usage
@@ -128,7 +129,7 @@ Building & testing is conducted using Travis, Mocha, Chai, and Istanbul.
 
 # Release History (reverse chronological order)
 
-v0.1.7 2016-01-22 Added browser versions.
+v0.1.7 2016-01-22 Completely eliminated built-in prototype "pollution" except at programmer request.
 
 v0.1.6 2016-01-22 Corrected bad reference to client file in *package.json*. 
 
