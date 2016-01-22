@@ -1,9 +1,9 @@
 {
   "name": "joex",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Javascript Object Extensions",
   "main": "index.js",
-  "client": "./browser/chrome-proxy.js",
+  "client": "./browser/joex.js",
   "isomorphic": true,
   "scripts": {
     "test": "istanbul cover node_modules/mocha/bin/_mocha --report lcov -- -R spec",
