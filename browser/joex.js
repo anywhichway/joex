@@ -484,25 +484,5 @@
 		return ExtendedDate;
 	}
 	
-
-	
-	if (this.exports) {
-		this.exports.Array = Array;
-		this.exports.Set = Set;
-		this.exports.Boolean = Boolean;
-		this.exports.Number = Number;
-		this.exports.String = String;
-		this.exports.Date = Date;
-	} else if (typeof define === 'function' && define.amd) {
-		// Publish as AMD module
-		define(function() {return {ExtendedArray:ExtendedArray,ExtendedSet:ExtendedSet,ExtendedBoolean:ExtendedBoolean,ExtendedNumber:ExtendedNumber,ExtendedString:ExtendedString,ExtendedDate:ExtendedDate};});
-	} else {
-		this.Array = Array;
-		this.Set = Set;
-		this.ExtendedBoolean = Boolean;
-		this.ExtendedNumber = Number;
-		this.ExtendedString = String;
-		this.Date = Date;
-	}
 }).call((typeof(window)!=='undefined' ? window : (typeof(module)!=='undefined' ? module : null)));
 },{}]},{},[1]);
