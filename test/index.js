@@ -1,12 +1,13 @@
 var expect;
 if(typeof(window)==="undefined") {
 	expect = require("chai").expect;
-	Array = require('../index.js').Array.extend();
-	Set = require('../index.js').Set.extend();
-	Boolean = require('../index.js').Boolean.extend();
-	Number = require('../index.js').Number.extend();
-	String = require('../index.js').String.extend();
-	Date = require('../index.js').Date.extend();
+	require('../index.js');
+	Array = Array.extend();
+	Set = Set.extend();
+	Boolean = Boolean.extend();
+	Number = Number.extend();
+	String = String.extend();
+	Date = Date.extend();
 }
 
 describe('Array',function() {
