@@ -1,5 +1,5 @@
 # joex
-Javascript Object Extensions
+JavaScript Object Extensions
 
 Adds *.lt, .lte, .eq, .neq, .gte, .gt* to Number, String, Boolean, Date. Dates can be compared with precision, e.g. *.lt(date,"Y")*.
 
@@ -32,7 +32,7 @@ Extensions are created by extending the *.prototype* for native constructors so 
 
 For selectivity, extensions are only created upon request for any given class by calling */<constructor/>.extend()*.
 
-The design philosophy for Date involves making objects more declarative than is typical with Javascript because we find this leads to more concise and less bug prone code. It also happens to be useful when indexing objects for [JOQULAR](http://www.github.com/anywhichway/joqular) or other JSON data stores. This is accomplished through the use of Object.defineProperty on class prototypes to create virtual properties with get and set functions, e.g. 
+The design philosophy for Date involves making objects more declarative than is typical with JavaScript because we find this leads to more concise and less bug prone code. It also happens to be useful when indexing objects for [JOQULAR](http://www.github.com/anywhichway/joqular) or other JSON data stores. This is accomplished through the use of Object.defineProperty on class prototypes to create virtual properties with get and set functions, e.g. 
 
 ```Object.defineProperty(Date.prototype,"fullYear",{enumerable:true,configurable:true,set:function(value) { this.setFullYear(value); },get:function() {return this.getFullYear();}).```
 
@@ -74,7 +74,7 @@ Number, String, Boolean support *.lt, .lte, .eq, .neq, .gte, .gt*. See Array, Se
 
 #### Properties
 
-*.year, .fullYear, .month, .dayofMonth, .hours, .minutes, .seconds, .milliseconds* are all exposed as properties that correspond to the similarly named get and set functions. Note, since *.getYear* is being deprecated from Javascript, *.year* always corresponds to *.fullYear*.
+*.year, .fullYear, .month, .dayofMonth, .hours, .minutes, .seconds, .milliseconds* are all exposed as properties that correspond to the similarly named get and set functions. Note, since *.getYear* is being deprecated from JavaScript, *.year* always corresponds to *.fullYear*.
 
 #### Methods
 
