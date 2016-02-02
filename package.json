@@ -1,6 +1,6 @@
 {
   "name": "joex",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Javascript Object Extensions",
   "main": "index.js",
   "client": "./browser/joex.js",
