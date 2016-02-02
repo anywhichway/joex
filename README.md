@@ -11,7 +11,9 @@ Selectively adds  *.isLeapYear* and *.getLastDayOfMonth* methods to Date. Also a
 
 Selectively adds  *.avg, .coincident, .crossproduct, .disjoint, .getMin, .getMax, .getAvg, .getSum, .intersection, .intersects, .max, .min, .sum* to Array and Set.
 
-Also selectively adds *.every, .find, .includes, .indexOf, .join, .map, .reduce, .some, .valueAt*, and *.toJSON* to Set. *.toJSON* results in an array like representation.
+Selectively adds *.every, .find, .includes, .indexOf, .join, .map, .reduce, .some, .valueAt*, and *.toJSON* to Set. *.toJSON* results in an array like representation.
+
+Also selectively adds arraylike function to Object.
 
 **NEW** Extensions to Object that support similar methods to Array, e.g. *.forEach, .every, .map*. Extensions to Set so that it supports almost all the same methods as Array. Option to avoid "pollution" of built-in prototypes. There are potentially breaking changes related to *.min, .max, .sum, .avg* which hav ebeen made declaritive and replaced with equivalent *.get<prop>* methods.
 
