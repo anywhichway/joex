@@ -7,13 +7,13 @@ Selectively adds  *.between* and *.outside* to Number and String.
 
 Selectively adds  *.echoes(string)* and *.soundex* to String.
 
-Selectively adds  isLeapYear and getLastDayOfMonth methods to Date. Also adds data members to represent all of the parts of a Date so that they can be treated in a declarative manner, e.g. year, fullYear, month, etc.
+Selectively adds  *.isLeapYear* and *.getLastDayOfMonth* methods to Date. Also adds data members to represent all of the parts of a Date so that they can be treated in a declarative manner, e.g. year, fullYear, month, etc.
 
 Selectively adds  *.avg, .coincident, .crossproduct, .disjoint, .getMin, .getMax, .getAvg, .getSum, .intersection, .intersects, .max, .min, .sum* to Array and Set.
 
 Also selectively adds *.every, .find, .includes, .indexOf, .join, .map, .reduce, .some, .valueAt*, and *.toJSON* to Set. *.toJSON* results in an array like representation.
 
-**NEW** Extensions to Object that support similar methods to Array, e.g. *.forEach, .every, .map*. Extensions to Set so that it supports almost all the same methods as Array. Option to avoid "pollution" of built-in prototypes.
+**NEW** Extensions to Object that support similar methods to Array, e.g. *.forEach, .every, .map*. Extensions to Set so that it supports almost all the same methods as Array. Option to avoid "pollution" of built-in prototypes. There are potentially breaking changes related to *.min, .max, .sum, .avg* which hav ebeen made declaritive and replaced with equivalent *.get<prop>* methods.
 
 [![Build Status](https://travis-ci.org/anywhichway/joex.svg)](https://travis-ci.org/anywhichway/joex)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/8ff33e04aa48424c97f63740e87afd9d)](https://www.codacy.com/app/syblackwell/joex)
@@ -66,7 +66,7 @@ Number, String, Boolean support *.lt, .lte, .eq, .eeq, .neq, .neeq, .gte, .gt*. 
 
 #### Methods
 
-*.avg(all)* - Returns the avg value of numeric values or items coerceable into numerics (e.g. Date, Time) in the array. Non-numeric values are ignored unless *all* is set. If *all* is *true*, then non-numeric values increment the count by which the average is computed. If *all* is a function and returns a numeric when called with a value, the numeric is added to the values to be averaged. If it returns a non-numeric, the value is ignored and the count is not incremented.
+*.getAvg(all)* - Returns the avg value of numeric values or items coerceable into numerics (e.g. Date, Time) in the array. Non-numeric values are ignored unless *all* is set. If *all* is *true*, then non-numeric values increment the count by which the average is computed. If *all* is a function and returns a numeric when called with a value, the numeric is added to the values to be averaged. If it returns a non-numeric, the value is ignored and the count is not incremented.
 
 *.getMax()* - Returns the max value in the array.
 
@@ -79,6 +79,12 @@ Number, String, Boolean support *.lt, .lte, .eq, .eeq, .neq, .neeq, .gte, .gt*. 
 *intersection(Array,...)* - Returns an Array that represents the intersection of the provided arguments. If no arguments are provided, the instance is intersected with itself, thus it returns its set equivalent as an Array.
 
 *.crossproduct([Arrays],function(row))* - Returns a Cartesian cross-product of the instance and the provided array of arrays. If a function is provided as a second argument it acts as a filter for each row as it is built. If a *row* will be an Array. If it should not be added to the cross-product, the function should return *false*, otherwise return *true*.
+
+#### Properties
+
+*.avg, .max, .min, .sum* - Are all added as non-enumerable, read-only properties.
+
+*.count* - Is an alias for *.length*.
 
 ### Date
 
@@ -137,6 +143,12 @@ Supports the same extended summary methods as Array.
 *.toJSON* - Returns the set as an Array.
 
 *.valueAt* - Returns the value at the provided index, or *undefined* if not found.
+
+#### Properties
+
+*.avg, .max, .min, .sum* - Are all added as non-enumerable, read-only properties.
+
+*.count* - Is an alias for *.length*.
 
 ### String
 
